@@ -2,7 +2,7 @@ package model;
 
 import java.io.File;
 
-public class InitialisationBase {
+public class MAJBase {
 
 	  
    //Permet de récupérer
@@ -14,16 +14,14 @@ public class InitialisationBase {
 	  return files;
    }
    
-   //Permet d'insérer les données d'un fichier txt dans la base de données
+   //Permet d'insérer les données d'un fichier txt dans la base de données s'il n'existe pas déjà
    //Renvoie false si l'oeuvre existe déjà, true sinon
    public static boolean importerFichierEnBase(File fichier) {
 	   
 	   //Tester s'il existe en base
-	   try {
-		   //Requête
-	   } catch (Exception e) {
 
-	   }
+	   //Requête
+
 	   
 	   //Si ça existe déjà
 	   if (1 == 1) {
@@ -32,8 +30,15 @@ public class InitialisationBase {
 	   return true;
    }
    
+   //
+   public static boolean lireFichier(File fichier) {
+	   
+	   return false; //si fichier non lisible
+   }
    
+   //Déplacer fichier
    
+
    //Vider base
    public static void viderBDD() {
 	   
