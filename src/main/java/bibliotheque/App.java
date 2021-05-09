@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import model.Commentaire;
 import model.MAJBase;
 import model.MongoDBConnexion;
-import model.Oeuvre;
 
 /**
  * JavaFX App
@@ -68,5 +67,5 @@ public class App extends Application {
 
     	launch(); // On lance l'application*/
     
-
+    }
 }
