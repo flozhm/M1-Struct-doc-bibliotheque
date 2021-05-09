@@ -16,7 +16,7 @@ public class MAJBase {
    
    //Permet d'insérer les données d'un fichier txt dans la base de données s'il n'existe pas déjà
    //Renvoie false si l'oeuvre existe déjà, true sinon
-   public static boolean importerFichierEnBase(File fichier) {
+   public static boolean importerFichierEnBase(Oeuvre oeuvre) {
 	   
 	   //Tester s'il existe en base
 
