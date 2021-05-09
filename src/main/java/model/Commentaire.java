@@ -8,7 +8,7 @@ public class Commentaire {
 	private String texte;
 	
 	
-	public Commentaire(String login, String datePublication, int note, String texte) {
+	public Commentaire(String login, String datePublication, double note, String texte) {
 		this.login = login;
 		this.datePublication = datePublication;
 		this.note = note;

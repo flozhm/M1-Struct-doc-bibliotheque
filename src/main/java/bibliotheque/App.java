@@ -41,7 +41,7 @@ public class App extends Application {
     	
     	MAJBase.viderBDD();//On vide la BDD 
     	//fichiers = MAJBase.recupFichiers(); //On récupère les fichiers
-    	document = new Commentaire("login", "2011-03-16", int note, String texte);
+    	Commentaire doc = new Commentaire("login", "2011-03-16", 9.4, "blabla");
         document.append("login", "oiseau54");
         document.append("datePublication", 2011-03-16);
         document.append("note", "9.4");
