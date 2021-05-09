@@ -38,9 +38,8 @@ public class App extends Application {
 
     public static void main(String[] args) {
     
-    	Oeuvre[] fichiers = null;
-    	
     	File[] fichiers = null;
+    	
 
 		// MAJBase.viderBDD();// On vide la BDD
 		fichiers = MAJBase.recupFichiers(); // On récupère les fichiers

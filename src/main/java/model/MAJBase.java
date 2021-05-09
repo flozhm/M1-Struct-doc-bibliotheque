@@ -78,12 +78,7 @@ public class MAJBase {
 	   return false;
    }
    
-   
-   //Trasnforme un fichier en une oeuvre en analysant son contenu
-   public static void lireFichier(File fichier) {
-	   
-	   //si fichier non lisible
-   }
+  
    
    //Déplacer fichier
  
@@ -104,7 +99,7 @@ public class MAJBase {
 		return true;
 	}
 
-	//
+	//Trasnforme un fichier en une oeuvre en analysant son contenu
 	public static void lireFichier(File f) {
 		Oeuvre oeuvre = new Oeuvre();
 
@@ -120,28 +115,28 @@ public class MAJBase {
 			while (((line = br.readLine()) != null)) {
 
 				if (line.split(": ")[0].equals("Titre")) {
-					oeuvre.setTitre = line.split(": ")[1];
+					oeuvre.setTitre(line.split(": ")[1]);
 				} else if (line.split(": ")[0].equals("Auteurs")) {
 					if (line.split(": ")[1].contains(",")) {
 						String[] auteurs;
 						auteurs = line.split(": ")[1].split(", ");
 						for (int i = 0; i < auteurs.length; i++) {
-							oeuvre.setAuteurs.add(auteurs[i]);
+							oeuvre.getAuteurs().add(auteurs[i]);
 						}
 					} else {
-						oeuvre.setAuteurs.add(line.split(": ")[1]);
+						oeuvre.getAuteurs().add(line.split(": ")[1]);
 					}
 
 				} else if (line.split(": ")[0].equals("Pages")) {
-					oeuvre.setNbPage = Integer.parseInt(line.split(": ")[1]);
+					oeuvre.setNbPage(Integer.parseInt(line.split(": ")[1]));
 
 				} else if (line.split(": ")[0].equals("Publication")) {
-					oeuvre.setDatePubli = line.split(": ")[1];
+					oeuvre.setDatePubli(line.split(": ")[1]);
 
 				} else if (line.split(": ")[0].equals("Theme")) {
-					oeuvre.setTheme = line.split(": ")[1];
+					oeuvre.setTheme(line.split(": ")[1]);
 				} else if (line.split(": ")[0].equals("Roles")) {
-					oeuvre.setRole = line.split(": ")[1];
+					oeuvre.setRole(line.split(": ")[1]);
 				} else if (line.split(": ")[0].equals("Formations")) {
 					continue;
 
@@ -163,7 +158,7 @@ public class MAJBase {
 			fr.close();
 			// System.out.println("Contenu du contenu: ");
 			// System.out.println(sb.toString());
-			oeuvre.setContenu = sb.toString();
+			oeuvre.setContenu() = sb.toString();
 			System.out.println(oeuvre.toString());
 
 		} catch (
