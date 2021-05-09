@@ -47,12 +47,12 @@ public class MAJBase {
    //Vider base
    public static void viderBDD() {
 	   
-	   //Connexion à la BDD
-	   //On vide chaque table
 	   
-	   // Selection de la collection
-	   MongoCollection<Document> collection = MongoClients.create().getDatabase("bibliotheque").getCollection("publis");
-	   collection.drop(); //Supprime la collection
+	   //On vide chaque table
+	   new MongoDBConnexion().getDatabase().getCollection("oeuvre").drop(); //Supprime la collection
+	   new MongoDBConnexion().getDatabase().createCollection("oeuvre"); //La crée
+	   
+	   
 	   
 	   	   
    }

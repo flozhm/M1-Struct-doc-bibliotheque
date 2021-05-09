@@ -41,14 +41,14 @@ public class App extends Application {
     	MAJBase.viderBDD();//On vide la BDD 
     	//fichiers = MAJBase.recupFichiers(); //On récupère les fichiers
     	
-    	
-  	  for(int i = 0; i < fichiers.length ; i++){ //On boucle sur les fichiers du répertoire
+    
+  	  /*for(int i = 0; i < fichiers.length ; i++){ //On boucle sur les fichiers du répertoire
 
 		  //String fileName = fichiers[i].getName(); // On récupère le nom du fichier
 		  //MAJBase.importerOeuvreEnBase(fichiers[i]); //On insère les données des fichiers un par un dans la BDD
 	  }
 
-    	launch(); // On lance l'application
+    	launch(); // On lance l'application*/
     }
 
 }
