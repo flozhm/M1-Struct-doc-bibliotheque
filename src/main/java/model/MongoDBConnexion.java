@@ -10,7 +10,7 @@ public class MongoDBConnexion {
     private MongoDatabase database;
 
     public MongoDBConnexion() {
-	mongoClient = MongoClients.create();
-	database = mongoClient.getDatabase("bibliotheque");
+		mongoClient = MongoClients.create();
+		database = mongoClient.getDatabase("bibliotheque");
     }
 }

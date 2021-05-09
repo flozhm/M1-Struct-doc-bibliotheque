@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.MAJBase;
+import model.Oeuvre;
 
 /**
  * JavaFX App
@@ -35,16 +36,16 @@ public class App extends Application {
 
     public static void main(String[] args) {
     
-    	File[] fichiers = null;
+    	Oeuvre[] fichiers = null;
     	
     	MAJBase.viderBDD();//On vide la BDD 
-    	fichiers = MAJBase.recupFichiers(); //On récupère les fichiers
+    	//fichiers = MAJBase.recupFichiers(); //On récupère les fichiers
     	
     	
   	  for(int i = 0; i < fichiers.length ; i++){ //On boucle sur les fichiers du répertoire
 
 		  //String fileName = fichiers[i].getName(); // On récupère le nom du fichier
-		  MAJBase.importerFichierEnBase(fichiers[i]); //On insère les données des fichiers un par un dans la BDD
+		  //MAJBase.importerOeuvreEnBase(fichiers[i]); //On insère les données des fichiers un par un dans la BDD
 	  }
 
     	launch(); // On lance l'application
