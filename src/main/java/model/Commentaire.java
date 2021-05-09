@@ -4,7 +4,7 @@ public class Commentaire {
 
 	private String login;
 	private String datePublication;
-	private int note;
+	private double note;
 	private String texte;
 	
 	
@@ -21,7 +21,7 @@ public class Commentaire {
 	public String getDatePublication() {
 		return datePublication;
 	}
-	public int getNote() {
+	public double getNote() {
 		return note;
 	}
 	public String getTexte() {

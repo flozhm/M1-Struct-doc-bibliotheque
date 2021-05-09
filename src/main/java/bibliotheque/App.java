@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Commentaire;
 import model.MAJBase;
 import model.Oeuvre;
 
@@ -40,7 +41,12 @@ public class App extends Application {
     	
     	MAJBase.viderBDD();//On vide la BDD 
     	//fichiers = MAJBase.recupFichiers(); //On récupère les fichiers
-    	oeuvre = new Oeuvre();
+    	document = new Commentaire("login", "2011-03-16", int note, String texte);
+        document.append("login", "oiseau54");
+        document.append("datePublication", 2011-03-16);
+        document.append("note", "9.4");
+        document.append("texte", "blablablabla blabla bla");
+        
     	MAJBase.insererOeuvreEnBase();
     
   	  /*for(int i = 0; i < fichiers.length ; i++){ //On boucle sur les fichiers du répertoire
