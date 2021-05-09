@@ -99,7 +99,7 @@ public class MAJBase {
 		return true;
 	}
 
-	//Trasnforme un fichier en une oeuvre en analysant son contenu
+	//Transforme un fichier en une oeuvre en analysant son contenu
 	public static void lireFichier(File f) {
 		Oeuvre oeuvre = new Oeuvre();
 
