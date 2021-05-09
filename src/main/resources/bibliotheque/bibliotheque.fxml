@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -14,8 +16,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
    <children>
       <BorderPane fx:id="connexionPane" prefHeight="200.0" prefWidth="200.0">
          <center>
@@ -31,7 +34,7 @@
                         <Font size="18.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="loginValidation" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" style="-fx-background-color: #00cf00;" text="Valider">
+                  <Button fx:id="loginValidation" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#connexion" prefHeight="40.0" style="-fx-background-color: #00cf00;" text="Valider">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -50,57 +53,156 @@
             </Label>
          </top>
       </BorderPane>
-      <BorderPane fx:id="accueilPane" prefHeight="200.0" prefWidth="200.0">
+      <BorderPane fx:id="accueilPane">
          <center>
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" />
-                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints vgrow="SOMETIMES" />
-                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="05.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="95.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Oeuvres les mieux notées" />
-                  <Label text="Commentaires les plus récents" GridPane.columnIndex="1" />
-                  <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Tableau des oeuvres les mieux notées" textAlignment="CENTER" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" GridPane.columnIndex="1">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Tableau des commentaires les plus récents" textAlignment="CENTER" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </HBox>
+                  <TableView fx:id="tableNote" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Oeuvre" />
-                      <TableColumn prefWidth="75.0" text="Note" />
+                      <TableColumn fx:id="tableNoteOeuvre" editable="false" prefWidth="75.0" sortable="false" text="Oeuvre" />
+                      <TableColumn fx:id="tableNoteNote" editable="false" prefWidth="75.0" sortType="DESCENDING" sortable="false" text="Note" />
                     </columns>
+                     <GridPane.margin>
+                       <Insets bottom="6.0" left="12.0" right="6.0" top="6.0" />
+                     </GridPane.margin>
                   </TableView>
-                  <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TableView fx:id="tableCommentaire" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Oeuvre" />
-                      <TableColumn prefWidth="75.0" text="Date dernier commentaire" />
+                      <TableColumn fx:id="tableCommentaireOeuvre" editable="false" prefWidth="75.0" sortable="false" text="Oeuvre" />
+                      <TableColumn fx:id="tableCommentaireDate" editable="false" prefWidth="75.0" sortType="DESCENDING" sortable="false" text="Date dernier commentaire" />
+                    </columns>
+                     <GridPane.margin>
+                        <Insets bottom="6.0" left="6.0" right="12.0" top="6.0" />
+                     </GridPane.margin>
+                  </TableView>
+               </children>
+            </GridPane>
+         </center>
+         <top>
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="consultation" mnemonicParsing="false" onAction="#consultation" text="Consulter la liste des oeuvres" />
+                  <Button fx:id="deconnexion1" mnemonicParsing="false" onAction="#deconnexion" text="Déconnexion" />
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="lire1" mnemonicParsing="false" onAction="#lire" text="Lire une oeuvre" />
+               </children>
+            </HBox>
+         </bottom>
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
+      </BorderPane>
+      <BorderPane fx:id="consultationPane" prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="6.0" left="12.0" right="12.0" top="6.0" />
+               </BorderPane.margin>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints percentHeight="05.0" vgrow="SOMETIMES" />
+                  <RowConstraints percentHeight="95.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Tableau de consultation des oeuvres" textAlignment="CENTER" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="tableConsultation" GridPane.rowIndex="1">
+                    <columns>
+                      <TableColumn fx:id="tableConsultationTitre" editable="false" prefWidth="75.0" text="Titre" />
+                      <TableColumn fx:id="tableConsultationTheme" editable="false" prefWidth="75.0" text="Thème" />
+                      <TableColumn fx:id="tableConsultationPages" editable="false" prefWidth="75.0" text="Pages" />
+                      <TableColumn fx:id="tableConsultationDate" editable="false" prefWidth="75.0" text="Date de publication" />
+                      <TableColumn fx:id="tableConsultationDate" editable="false" prefWidth="75.0" text="Note" />
                     </columns>
                   </TableView>
                </children>
             </GridPane>
          </center>
          <top>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" text="Consulter la liste des oeuvres" />
-                  <Button mnemonicParsing="false" text="Déconnexion" />
+                  <Button fx:id="accueil" mnemonicParsing="false" onAction="#accueil" text="Accueil" />
+                  <Button fx:id="deconnexion2" mnemonicParsing="false" onAction="#deconnexion" text="Déconnexion" />
                </children>
             </HBox>
          </top>
          <bottom>
-            <Button mnemonicParsing="false" text="Lire une oeuvre" BorderPane.alignment="CENTER" />
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="lire2" mnemonicParsing="false" onAction="#lire" text="Lire une oeuvre" />
+               </children>
+            </HBox>
          </bottom>
       </BorderPane>
-      <BorderPane fx:id="consultationPane" prefHeight="200.0" prefWidth="200.0">
+      <BorderPane fx:id="oeuvrePane">
          <center>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TableView>
+            <ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+               <content>
+                  <VBox fx:id="contenu">
+                     <children>
+                        <Label fx:id="titre" text="Titre de l'oeuvre" />
+                        <Separator layoutX="10.0" layoutY="27.0" />
+                        <TextFlow fx:id="contenuTextFlow" />
+                        <Separator />
+                        <Label fx:id="commentaires" text="Commentaires" />
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
          </center>
-      </BorderPane>
-      <BorderPane fx:id="oeuvrePane" prefHeight="200.0" prefWidth="200.0" />
+         <left>
+            <VBox fx:id="auteursBox" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Auteurs :" />
+               </children>
+            </VBox>
+         </left>
+         <bottom>
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="commenter" mnemonicParsing="false" onAction="#commenter" text="Ajouter un commentaire" />
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="accueil2" mnemonicParsing="false" onAction="#accueil" text="Accueil" />
+                  <Button fx:id="consultation2" mnemonicParsing="false" onAction="#consultation" text="Button" />
+                  <Button fx:id="deconnexion3" mnemonicParsing="false" onAction="#deconnexion" text="Déconnexion" />
+               </children>
+            </HBox>
+         </top></BorderPane>
    </children>
 </StackPane>
