@@ -13,4 +13,14 @@ public class MongoDBConnexion {
 		mongoClient = MongoClients.create();
 		database = mongoClient.getDatabase("bibliotheque");
     }
+
+	public MongoClient getMongoClient() {
+		return mongoClient;
+	}
+
+	public MongoDatabase getDatabase() {
+		return database;
+	}
+    
+    
 }

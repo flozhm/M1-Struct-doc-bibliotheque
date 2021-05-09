@@ -2,6 +2,11 @@ package model;
 
 import java.io.File;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+
 public class MAJBase {
 
 	  
@@ -30,7 +35,7 @@ public class MAJBase {
 	   return true;
    }
    
-   //
+   //Trasnforme un fichier en une oeuvre en analysant son contenu
    public static Oeuvre lireFichier(File fichier) {
 	   
 	   return null; //si fichier non lisible
@@ -44,6 +49,11 @@ public class MAJBase {
 	   
 	   //Connexion à la BDD
 	   //On vide chaque table
+	   
+	   // Selection de la collection
+	   MongoCollection<Document> collection = MongoClients.create().getDatabase("bibliotheque").getCollection("publis");
+	   collection.drop(); //Supprime la collection
+	   
 	   	   
    }
    
