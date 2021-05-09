@@ -24,6 +24,7 @@ public class App extends Application {
 	    Parent root = FXMLLoader.load(getClass().getResource("bibliotheque.fxml"));
 	    Scene scene = new Scene(root);
 	    primaryStage.setScene(scene);
+	    primaryStage.setMaximized(true);
 	    primaryStage.show();
 	}
 	catch (IOException e) {
