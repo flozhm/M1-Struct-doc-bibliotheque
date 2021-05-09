@@ -21,12 +21,24 @@ public class MAJBase {
    
    //Permet d'insérer les données d'un fichier txt dans la base de données s'il n'existe pas déjà
    //Renvoie false si l'oeuvre existe déjà, true sinon
-   public static boolean importerOeuvreEnBase(Oeuvre oeuvre) {
+   public static boolean insererOeuvreEnBase(Oeuvre oeuvre) {
 	   
 	   //Tester s'il existe en base
 
 	   //Requête
+	   /*
+	   //Test insert d'un document dans la table commentaire
+	   Document document = new Document();
+       document.append("login", "oiseau54");
+       document.append("datePublication", 2011-03-16);
+       document.append("note", "9.4");
+       document.append("texte", "blablablabla blabla bla");
+       
+       System.out.println(document.toString());
 
+	   new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
+	   System.out.println("Document inséré avec succès"); 
+	   */
 	   
 	   //Si ça existe déjà
 	   if (1 == 1) {
@@ -34,6 +46,22 @@ public class MAJBase {
 	   }
 	   return true;
    }
+   
+   public static boolean insererUtilisateurEnBase(Oeuvre oeuvre) {
+	   
+	   return false;
+   }
+   
+   public static boolean insererFormationEnBase(Oeuvre oeuvre) {
+
+	   return false;
+   }
+   
+   public static boolean insererCommentaireEnBase(Oeuvre oeuvre) {
+
+	   return false;
+   }
+   
    
    //Trasnforme un fichier en une oeuvre en analysant son contenu
    public static Oeuvre lireFichier(File fichier) {
@@ -60,19 +88,7 @@ public class MAJBase {
 	   new MongoDBConnexion().getDatabase().getCollection("commentaire").drop(); //Supprime la collection
 	   new MongoDBConnexion().getDatabase().createCollection("commentaire"); //La crée
 	   
-	   /*
-	   //Test insert d'un document dans la table commentaire
-	   Document document = new Document();
-       document.append("login", "oiseau54");
-       document.append("datePublication", 2011-03-16);
-       document.append("note", "9.4");
-       document.append("texte", "blablablabla blabla bla");
-       
-       System.out.println(document.toString());
 
-	   new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
-	   System.out.println("Document inséré avec succès"); 
-	   */
    }
    
    
