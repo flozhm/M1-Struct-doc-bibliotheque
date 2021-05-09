@@ -47,14 +47,32 @@ public class MAJBase {
    //Vider base
    public static void viderBDD() {
 	   
-	   
-	   //On vide chaque table
+	   //On vide chaque collection
 	   new MongoDBConnexion().getDatabase().getCollection("oeuvre").drop(); //Supprime la collection
 	   new MongoDBConnexion().getDatabase().createCollection("oeuvre"); //La crée
 	   
+	   new MongoDBConnexion().getDatabase().getCollection("utilisateur").drop(); //Supprime la collection
+	   new MongoDBConnexion().getDatabase().createCollection("utilisateur"); //La crée
 	   
+	   new MongoDBConnexion().getDatabase().getCollection("formation").drop(); //Supprime la collection
+	   new MongoDBConnexion().getDatabase().createCollection("formation"); //La crée
 	   
-	   	   
+	   new MongoDBConnexion().getDatabase().getCollection("commentaire").drop(); //Supprime la collection
+	   new MongoDBConnexion().getDatabase().createCollection("commentaire"); //La crée
+	   
+	   /*
+	   //Test insert d'un document dans la table commentaire
+	   Document document = new Document();
+       document.append("login", "oiseau54");
+       document.append("datePublication", 2011-03-16);
+       document.append("note", "9.4");
+       document.append("texte", "blablablabla blabla bla");
+       
+       System.out.println(document.toString());
+
+	   new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
+	   System.out.println("Document inséré avec succès"); 
+	   */
    }
    
    
