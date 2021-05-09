@@ -40,7 +40,8 @@ public class App extends Application {
     	
     	MAJBase.viderBDD();//On vide la BDD 
     	//fichiers = MAJBase.recupFichiers(); //On récupère les fichiers
-    	
+    	oeuvre = new Oeuvre();
+    	MAJBase.insererOeuvreEnBase();
     
   	  /*for(int i = 0; i < fichiers.length ; i++){ //On boucle sur les fichiers du répertoire
 

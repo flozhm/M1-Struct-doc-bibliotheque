@@ -23,8 +23,9 @@ public class MAJBase {
    //Renvoie false si l'oeuvre existe déjà, true sinon
    public static boolean insererOeuvreEnBase(Oeuvre oeuvre) {
 	   
-	   //Tester s'il existe en base
-
+	   //On teste si l'oeuvre existe en base
+	   
+	   
 	   //Requête
 	   /*
 	   //Test insert d'un document dans la table commentaire
