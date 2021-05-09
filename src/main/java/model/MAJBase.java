@@ -27,8 +27,9 @@ public class MAJBase {
 	   
 	   //On teste si l'oeuvre existe en base
 	   
+	   //On teste s'il existe déjà dans la BDD (via nom de famille)
+       //Requête BDD
 	   
-	   //Requête
 	   /*
 	   //Test insert d'un document dans la table commentaire
 	   Document document = new Document();
@@ -52,11 +53,19 @@ public class MAJBase {
    
    public static boolean insererUtilisateurEnBase(Utilisateur utilisateur) {
 	   
+	   //On teste s'il existe déjà dans la BDD (via nom de famille)
+       //Requête BDD
+	   
+	   //S'il existe déjà on ajoute un numéro ou on incrémente le numéro
+	   
 	   return false;
    }
    
    public static boolean insererFormationEnBase(Formation formation) {
 
+	   //On teste s'il existe déjà dans la BDD (via nom)
+       //Requête BDD
+	   
 	   return false;
    }
    
@@ -69,7 +78,7 @@ public class MAJBase {
        document.append("note", com.getNote());
        document.append("texte", com.getTexte());
        
-       //On teste s'il existe déjà dans la BDD
+       //On teste s'il existe déjà dans la BDD (via login + datePublication)
        //Requête BDD
        
        //S'il n'existe pas, on l'insère dans la collection commentaire
