@@ -117,7 +117,7 @@ if $cygwin; then
   [ -n "$REPO" ] && REPO=`cygpath --path --windows "$REPO"`
 fi
 
-exec "$JAVACMD" $JAVA_OPTS  \
+exec "$JAVACMD" $JAVA_OPTS --module-path $JAVAFX_HOME/lib --add-modules javafx.controls,javafx.fxml \
   -classpath "$CLASSPATH" \
   -Dapp.name="run" \
   -Dapp.pid="$$" \
