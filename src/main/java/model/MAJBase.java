@@ -48,26 +48,39 @@ public class MAJBase {
 	   return true;
    }
    
-   public static boolean insererUtilisateurEnBase(Oeuvre oeuvre) {
+   public static boolean insererUtilisateurEnBase(Utilisateur utilisateur) {
 	   
 	   return false;
    }
    
-   public static boolean insererFormationEnBase(Oeuvre oeuvre) {
+   public static boolean insererFormationEnBase(Formation formation) {
 
 	   return false;
    }
    
-   public static boolean insererCommentaireEnBase(Oeuvre oeuvre) {
-
+   public static boolean insererCommentaireEnBase(Commentaire com) {
+	   
+	   Document document = new Document();
+	   //On créé le document à insérer
+       document.append("login", com.getLogin() );
+       document.append("datePublication", com.getDatePublication());
+       document.append("note", com.getNote());
+       document.append("texte", com.getTexte());
+       
+       //On teste s'il existe déjà dans la BDD
+       //Requête BDD
+       
+       //S'il n'existe pas, on l'insère dans la collection commentaire
+       new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
+	  //Si oui on ne fait rien
 	   return false;
    }
    
    
    //Trasnforme un fichier en une oeuvre en analysant son contenu
-   public static Oeuvre lireFichier(File fichier) {
+   public static void lireFichier(File fichier) {
 	   
-	   return null; //si fichier non lisible
+	   //si fichier non lisible
    }
    
    //Déplacer fichier
