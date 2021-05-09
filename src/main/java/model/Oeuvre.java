@@ -5,19 +5,18 @@ import java.util.List;
 
 public class Oeuvre {
 
-	public String titre;
-    public List<String> auteurs;
-    public int nbPage;
-    public String datePubli;
-    public String role;
-    public String contenu;
+	private String titre;
+	private List<Auteur> auteurs;
+	private int nbPage;
+	private String datePubli;
+	private String role;
+	private String contenu;
 
     public Oeuvre() {
-        this.auteurs = new ArrayList<>();
+        this.auteurs = new ArrayList<Auteur>();
     }
-    
 
-	public Oeuvre(String titre, List<String> auteurs, int nbPage, String datePubli, String role, String contenu) {
+	public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, String datePubli, String role, String contenu) {
 		this.titre = titre;
 		this.auteurs = auteurs;
 		this.nbPage = nbPage;
@@ -25,6 +24,7 @@ public class Oeuvre {
 		this.role = role;
 		this.contenu = contenu;
 	}
+
 
 	@Override
 	public String toString() {
@@ -36,7 +36,30 @@ public class Oeuvre {
 				       "\ncontenu=" + contenu
 				       + "\n------------";
 	}
-    
-    
 	
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public List<Auteur> getAuteurs() {
+		return auteurs;
+	}
+
+	public int getNbPage() {
+		return nbPage;
+	}
+
+	public String getDatePubli() {
+		return datePubli;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public String getContenu() {
+		return contenu;
+	}	
+
 }
