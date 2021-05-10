@@ -61,7 +61,7 @@ public class App extends Application {
     	ArrayList<FormationUtilisateur> formation1 = new ArrayList<FormationUtilisateur>();
     	formation1.add(new FormationUtilisateur("MasterMIAGE",2019,2021));
     	Utilisateur user = new Utilisateur("Pierrat", "Charly", universiteRattachement, formation1, Role.Etudiant);
-        MAJBase.insererUtilisateurEnBase(user);
+        //MAJBase.insererUtilisateurEnBase(user);
         
     	//MAJBase.insererCommentaireEnBase(com);
     
