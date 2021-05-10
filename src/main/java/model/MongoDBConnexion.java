@@ -15,8 +15,8 @@ public class MongoDBConnexion {
     private MongoDatabase database;
 
     public MongoDBConnexion() {
-	mongoClient = MongoClients.create();
-	database = mongoClient.getDatabase("bibliotheque");
+		mongoClient = MongoClients.create();
+		database = mongoClient.getDatabase("bibliotheque");
     }
 
     public MongoDatabase getDatabase() {
@@ -24,7 +24,6 @@ public class MongoDBConnexion {
     }
 
     public List<Oeuvre> getOeuvres() {
-	// TODO Auto-generated method stub
 	return null;
     }
 

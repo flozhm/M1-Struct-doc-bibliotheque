@@ -1,6 +1,8 @@
 package bibliotheque;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Commentaire;
+import model.FormationUtilisateur;
 import model.MAJBase;
+import model.Role;
+import model.Utilisateur;
 
 /**
  * JavaFX App
@@ -49,8 +54,14 @@ public class App extends Application {
                 
         new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);*/
     	
-    	Commentaire com = new Commentaire("Oeuvre", "loginFZ58", "2011-03-16", 9.4, "blabla");
-        MAJBase.insererCommentaireEnBase(com);
+    	//Commentaire com = new Commentaire("Oeuvre", "loginFZ58", "2011-03-16", 9.4, "blabla");
+        //MAJBase.insererCommentaireEnBase(com);
+    	ArrayList<String> universiteRattachement = new ArrayList<String>();
+    	universiteRattachement.add("IDMC");
+    	ArrayList<FormationUtilisateur> formation1 = new ArrayList<FormationUtilisateur>();
+    	formation1.add(new FormationUtilisateur("MasterMIAGE",2019,2021));
+    	Utilisateur user = new Utilisateur("Pierrat", "Charly", universiteRattachement, formation1, Role.Etudiant);
+        //MAJBase.insererUtilisateurEnBase(user);
         
     	//MAJBase.insererCommentaireEnBase(com);
     
@@ -62,7 +73,7 @@ public class App extends Application {
 		}*/
 
 
-    	launch(); // On lance l'application*/
+    	//launch(); // On lance l'application*/
     
     }
 }

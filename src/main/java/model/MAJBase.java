@@ -37,9 +37,8 @@ public class MAJBase {
 	 * document.append("datePublication", 2011-03-16); document.append("note",
 	 * "9.4"); document.append("texte", "blablablabla blabla bla");
 	 * 
-	 * System.out.println(document.toString());
-	 * 
-	 * new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(
+	 * System.out.println(document.toString()); new
+	 * MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(
 	 * document); System.out.println("Document inséré avec succès");
 	 */
 
@@ -58,6 +57,8 @@ public class MAJBase {
 	Document query;
 	long count; // Compteur
 	MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
+	String universiteRattachement = "";
+	String formation = "";
 
 	// On teste s'il existe déjà dans la BDD (via nom)
 	// Requête BDD qui liste tous les utilisateurs via leur nom
@@ -79,10 +80,24 @@ public class MAJBase {
 	    document.append("login", user.getNom().toLowerCase() + count);
 	}
 
+	universiteRattachement += user.getUniversiteRattachement().get(0);
+	for (int i = 1; i < user.getUniversiteRattachement().size(); i++) {
+	    universiteRattachement += "," + user.getUniversiteRattachement().get(i);
+	}
+
+	formation += "(" + user.getFormation().get(0).getNom();
+	formation += "," + user.getFormation().get(0).getAnneeEntree();
+	formation += "," + user.getFormation().get(0).getAnneeSortie() + ")";
+	for (int i = 1; i < user.getFormation().size(); i++) {
+	    formation += ",(" + user.getFormation().get(i).getNom();
+	    formation += "," + user.getFormation().get(i).getAnneeEntree();
+	    formation += "," + user.getFormation().get(i).getAnneeSortie() + ")";
+	}
+
 	document.append("nom", user.getNom());
 	document.append("prenom", user.getPrenom());
-	document.append("universiteRattachement", user.getUniversiteRattachement());
-	document.append("formation", user.getFormation());
+	document.append("universiteRattachement", universiteRattachement);
+	document.append("formation", "[" + formation + "]");
 	document.append("role", user.getRole());
 
 	// On ajoute le nouvel utilisateur dans la collection utilisateur

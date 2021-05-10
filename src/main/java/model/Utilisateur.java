@@ -10,23 +10,10 @@ public class Utilisateur {
 	private List<String> universiteRattachement;
 	private List<FormationUtilisateur> formation;
 	private Role role;
-	
-	
-
-	
-	public Utilisateur(String login, String nom, String prenom, List<String> universiteRattachement,
-			List<FormationUtilisateur> formation, Role role) {
-		this.login = login;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.universiteRattachement = universiteRattachement;
-		this.formation = formation;
-		this.role = role;
-	}
 
 
 	public Utilisateur(String nom, String prenom, List<String> universiteRattachement,
-			List<FormationUtilisateur> formation, Role role) {
+			           List<FormationUtilisateur> formation, Role role) {
 		this.login = null;
 		this.nom = nom;
 		this.prenom = prenom;
