@@ -17,6 +17,7 @@ public class Oeuvre {
 
     public Oeuvre() {
 	this.auteurs = new ArrayList<Auteur>();
+	calculerNote();
     }
 
     public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, String datePubli, String role, String contenu) {
@@ -26,6 +27,7 @@ public class Oeuvre {
 	this.datePubli = datePubli;
 	this.role = role;
 	this.contenu = contenu;
+	calculerNote();
     }
 
     @Override
