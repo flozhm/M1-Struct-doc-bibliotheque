@@ -27,8 +27,9 @@ public class MAJBase {
 	   
 	   //On teste si l'oeuvre existe en base
 	   
+	   //On teste s'il existe déjà dans la BDD (via nom de famille)
+       //Requête BDD
 	   
-	   //Requête
 	   /*
 	   //Test insert d'un document dans la table commentaire
 	   Document document = new Document();
@@ -52,11 +53,19 @@ public class MAJBase {
    
    public static boolean insererUtilisateurEnBase(Utilisateur utilisateur) {
 	   
+	   //On teste s'il existe déjà dans la BDD (via nom de famille)
+       //Requête BDD
+	   
+	   //S'il existe déjà on ajoute un numéro ou on incrémente le numéro
+	   
 	   return false;
    }
    
    public static boolean insererFormationEnBase(Formation formation) {
 
+	   //On teste s'il existe déjà dans la BDD (via nom)
+       //Requête BDD
+	   
 	   return false;
    }
    
@@ -69,7 +78,7 @@ public class MAJBase {
        document.append("note", com.getNote());
        document.append("texte", com.getTexte());
        
-       //On teste s'il existe déjà dans la BDD
+       //On teste s'il existe déjà dans la BDD (via login + datePublication)
        //Requête BDD
        
        //S'il n'existe pas, on l'insère dans la collection commentaire
@@ -78,12 +87,7 @@ public class MAJBase {
 	   return false;
    }
    
-   
-   //Trasnforme un fichier en une oeuvre en analysant son contenu
-   public static void lireFichier(File fichier) {
-	   
-	   //si fichier non lisible
-   }
+  
    
    //Déplacer fichier
  
@@ -104,7 +108,7 @@ public class MAJBase {
 		return true;
 	}
 
-	//
+	//Transforme un fichier en une oeuvre en analysant son contenu
 	public static void lireFichier(File f) {
 		Oeuvre oeuvre = new Oeuvre();
 
@@ -120,28 +124,28 @@ public class MAJBase {
 			while (((line = br.readLine()) != null)) {
 
 				if (line.split(": ")[0].equals("Titre")) {
-					oeuvre.setTitre = line.split(": ")[1];
+					oeuvre.setTitre(line.split(": ")[1]);
 				} else if (line.split(": ")[0].equals("Auteurs")) {
 					if (line.split(": ")[1].contains(",")) {
 						String[] auteurs;
 						auteurs = line.split(": ")[1].split(", ");
 						for (int i = 0; i < auteurs.length; i++) {
-							oeuvre.setAuteurs.add(auteurs[i]);
+							oeuvre.getAuteurs().add(auteurs[i]);
 						}
 					} else {
-						oeuvre.setAuteurs.add(line.split(": ")[1]);
+						oeuvre.getAuteurs().add(line.split(": ")[1]);
 					}
 
 				} else if (line.split(": ")[0].equals("Pages")) {
-					oeuvre.setNbPage = Integer.parseInt(line.split(": ")[1]);
+					oeuvre.setNbPage(Integer.parseInt(line.split(": ")[1]));
 
 				} else if (line.split(": ")[0].equals("Publication")) {
-					oeuvre.setDatePubli = line.split(": ")[1];
+					oeuvre.setDatePubli(line.split(": ")[1]);
 
 				} else if (line.split(": ")[0].equals("Theme")) {
-					oeuvre.setTheme = line.split(": ")[1];
+					oeuvre.setTheme(line.split(": ")[1]);
 				} else if (line.split(": ")[0].equals("Roles")) {
-					oeuvre.setRole = line.split(": ")[1];
+					oeuvre.setRole(line.split(": ")[1]);
 				} else if (line.split(": ")[0].equals("Formations")) {
 					continue;
 
@@ -163,7 +167,7 @@ public class MAJBase {
 			fr.close();
 			// System.out.println("Contenu du contenu: ");
 			// System.out.println(sb.toString());
-			oeuvre.setContenu = sb.toString();
+			oeuvre.setContenu() = sb.toString();
 			System.out.println(oeuvre.toString());
 
 		} catch (

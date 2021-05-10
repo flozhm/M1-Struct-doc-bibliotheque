@@ -59,6 +59,10 @@ public class App extends Application {
 	 * // MAJBase.importerOeuvreEnBase(fichiers[i]); //On insère les données des //
 	 * fichiers un par un dans la BDD }
 	 */
+	// String fileName = fichiers[i].getName(); // On récupère le nom du fichier
+	// MAJBase.importerOeuvreEnBase(fichiers[i]); //On insère les données des
+	// fichiers un par un dans la BDD
+	// }
 
 	launch(); // On lance l'application*/
 
