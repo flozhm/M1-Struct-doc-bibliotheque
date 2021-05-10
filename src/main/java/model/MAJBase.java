@@ -51,16 +51,49 @@ public class MAJBase {
 	   return true;
    }
    
-   public static boolean insererUtilisateurEnBase(Utilisateur utilisateur) {
+   //(Lors de l'insertion d'une oeuvre)
+   //Insère un utilisateur en base
+   public static boolean insererUtilisateurEnBase(Utilisateur user) {
 	   
-	   //On teste s'il existe déjà dans la BDD (via nom de famille)
-       //Requête BDD
+	   Document document = new Document();
+	   Document query;
+	   long count; //Compteur
+	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
+	
+       
+	   //On teste s'il existe déjà dans la BDD (via nom)
+       //Requête BDD qui liste tous les utilisateurs via leur nom
 	   
-	   //S'il existe déjà on ajoute un numéro ou on incrémente le numéro
-	   
-	   return false;
+	   //db.utilisateur.find({"nom": com.getNom()})
+       query = new Document("nom",user.getNom());
+       count = collection.countDocuments(query);
+       System.out.println("Requête : " + count);
+       collection.find(query).limit(5).forEach(element -> System.out.println(element));
+       
+       
+       //S'il n'existe pas :
+       if (count == 0) {
+		   //On créé le document à insérer
+    	   document.append("login", user.getNom().toLowerCase() );
+	   } else {
+		   //S'il existe déjà on ajoute un numéro correspondant au n-ème nom
+		   //On créé le document à insérer
+    	   document.append("login", user.getNom().toLowerCase() + count);
+	   }
+       
+       document.append("nom", user.getNom() );
+       document.append("prenom", user.getPrenom());
+       document.append("universiteRattachement", user.getUniversiteRattachement());
+       document.append("formation", user.getFormation());
+       document.append("role", user.getRole());
+       
+       //On ajoute le nouvel utilisateur dans la collection utilisateur
+       collection.insertOne(document);
+ 	   return true;
    }
    
+   //(Lors de l'insertion d'une nouvelle oeuvre)
+   //Insère une formation en base
    public static boolean insererFormationEnBase(Formation formation) {
 
 	   //On teste s'il existe déjà dans la BDD (via nom)
@@ -69,22 +102,46 @@ public class MAJBase {
 	   return false;
    }
    
+   //(Via l'application lorsqu'on est connecté)
+   //Insère un commentaire en base
    public static boolean insererCommentaireEnBase(Commentaire com) {
 	   
 	   Document document = new Document();
-	   //On créé le document à insérer
-       document.append("login", com.getLogin() );
-       document.append("datePublication", com.getDatePublication());
-       document.append("note", com.getNote());
-       document.append("texte", com.getTexte());
+	   Document query;
+	   long count; //Compteur
+	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("commentaire");
+	
        
-       //On teste s'il existe déjà dans la BDD (via login + datePublication)
-       //Requête BDD
+       //On teste s'il existe déjà dans la BDD (via titreOeuvre + login + datePublication)
+       //Requête BDD qui liste tous les titres, logins et dates de publication égales à ceux du commentaire en param
+	   
+	   //db.commentaire.find({"oeuvre": com.getOeuvre(), "datePublication": com.getDatePublication(), "login": com.getLogin()})
+       query = new Document("oeuvre",com.getOeuvre())
+    		   	.append("datePublication", com.getDatePublication())
+    		   	.append("login", com.getLogin());
+       count = collection.countDocuments(query);
+       System.out.println("Requête : " + count);
+       collection.find(query).limit(5).forEach(element -> System.out.println(element));
        
-       //S'il n'existe pas, on l'insère dans la collection commentaire
-       new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
-	  //Si oui on ne fait rien
-	   return false;
+       
+       //S'il n'existe pas :
+       if (count == 0) {
+
+		   //On créé le document à insérer
+    	   document.append("oeuvre", com.getOeuvre() );
+	       document.append("login", com.getLogin() );
+	       document.append("datePublication", com.getDatePublication());
+	       document.append("note", com.getNote());
+	       document.append("texte", com.getTexte());
+	       
+	       //On l'insère dans la collection commentaire
+	       collection.insertOne(document);
+	       return true;
+	   	} else {
+	  	  //S'il existe on ne fait rien
+	 	   return false;
+	   	}
+
    }
    
   

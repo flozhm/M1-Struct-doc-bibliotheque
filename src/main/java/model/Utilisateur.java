@@ -7,15 +7,31 @@ public class Utilisateur {
 	private String login;
 	private String nom;
 	private String prenom;
-	private List<FormationUtilisateur> universiteRattachement;
+	private List<String> universiteRattachement;
+	private List<FormationUtilisateur> formation;
 	private Role role;
 	
 	
-	public Utilisateur(String login, String nom, String prenom, List<FormationUtilisateur> universiteRattachement, Role role) {
+
+	
+	public Utilisateur(String login, String nom, String prenom, List<String> universiteRattachement,
+			List<FormationUtilisateur> formation, Role role) {
 		this.login = login;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.universiteRattachement = universiteRattachement;
+		this.formation = formation;
+		this.role = role;
+	}
+
+
+	public Utilisateur(String nom, String prenom, List<String> universiteRattachement,
+			List<FormationUtilisateur> formation, Role role) {
+		this.login = null;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.universiteRattachement = universiteRattachement;
+		this.formation = formation;
 		this.role = role;
 	}
 	
@@ -29,9 +45,15 @@ public class Utilisateur {
 	public String getPrenom() {
 		return prenom;
 	}
-	public List<FormationUtilisateur> getUniversiteRattachement() {
+
+	public List<String> getUniversiteRattachement() {
 		return universiteRattachement;
 	}
+	public List<FormationUtilisateur> getFormation() {
+		return formation;
+	}
+
+
 	public Role getRole() {
 		return role;
 	}

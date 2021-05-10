@@ -37,32 +37,31 @@ public class App extends Application {
 
     public static void main(String[] args) {
     
-    	File[] fichiers = null;
+    	//File[] fichiers = null;
+		//fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
     	
-
-		// MAJBase.viderBDD();// On vide la BDD
-		fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
-    	
-    	MAJBase.viderBDD();//On vide la BDD 
-    	//fichiers = MAJBase.recupFichiers(); //On récupère les fichiers
-    	Document document = new Document();
-    	Commentaire com = new Commentaire("loginFZ", "2011-03-16", 9.4, "blabla");
+		//MAJBase.viderBDD();//On vide la BDD 
+		
+        /*Document document = new Document();
         document.append("login", com.getLogin() );
         document.append("datePublication", com.getDatePublication());
         document.append("note", com.getNote());
         document.append("texte", com.getTexte());
-        
-        new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
+                
+        new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);*/
+    	
+    	Commentaire com = new Commentaire("Oeuvre", "loginFZ58", "2011-03-16", 9.4, "blabla");
+        MAJBase.insererCommentaireEnBase(com);
         
     	//MAJBase.insererCommentaireEnBase(com);
     
-        for (int i = 0; i < fichiers.length; i++) { // On boucle sur les fichiers du répertoire
+        /*for (int i = 0; i < fichiers.length; i++) { // On boucle sur les fichiers du répertoire
 			MAJBase.lireFichier(fichiers[i]);
 
 			// String fileName = fichiers[i].getName(); // On récupère le nom du fichier
 			// MAJBase.importerOeuvreEnBase(fichiers[i]); //On insère les données des
 			// fichiers un par un dans la BDD
-		}
+		}*/
 
 
     	launch(); // On lance l'application*/

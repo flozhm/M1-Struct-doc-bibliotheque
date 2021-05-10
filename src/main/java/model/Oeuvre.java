@@ -13,6 +13,7 @@ public class Oeuvre {
 	private String theme;
 	private String role;
 	private String contenu;
+	private String note; //Calculee via une requete (moyenne des notes des commentaires) ; string car peut êre vide
 
     public Oeuvre() {
         this.auteurs = new ArrayList<Auteur>();
@@ -89,6 +90,16 @@ public class Oeuvre {
 	public void setContenu(String contenu) {
 		this.contenu = contenu;
 	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+	
+	
 	
 
 
