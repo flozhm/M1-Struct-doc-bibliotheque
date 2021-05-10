@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.mongodb.client.MongoClient;
@@ -29,13 +30,14 @@ public class MongoDBConnexion {
     }
 
     public List<Commentaire> getCommentaires(Oeuvre oeuvre) {
-	return null;
+	return new ArrayList<>();
     }
 
-    public double getNote(Oeuvre oeuvre) {
+    public Double getNote(Oeuvre oeuvre) {
+	System.out.println(getCommentaires(oeuvre).stream().map(commentaire -> commentaire.getNote())
+		.collect(Collectors.summingDouble(Double::doubleValue)) / getCommentaires(oeuvre).stream().count());
 	return getCommentaires(oeuvre).stream().map(commentaire -> commentaire.getNote())
 		.collect(Collectors.summingDouble(Double::doubleValue)) / getCommentaires(oeuvre).stream().count();
-
     }
 
     public List<Formation> getFormations() {
