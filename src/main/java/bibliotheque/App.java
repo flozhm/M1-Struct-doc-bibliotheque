@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Commentaire;
+import model.MAJBase;
 
 /**
  * JavaFX App
@@ -62,5 +64,5 @@ public class App extends Application {
 
     	launch(); // On lance l'application*/
     
-
+    }
 }
