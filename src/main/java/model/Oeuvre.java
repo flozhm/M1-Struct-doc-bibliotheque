@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,19 +9,20 @@ public class Oeuvre {
     private String	 titre;
     private List<Auteur> auteurs;
     private int		 nbPage;
-    private String	 datePubli;
+    private LocalDate	 datePubli;
+    private LocalDate	 dateDerCommentaire = null;
     private String	 theme;
     private String	 role;
     private String	 contenu;
-    private String	 note;	   // Calculee via une requete (moyenne des notes des commentaires) ; string car
-				   // peut êre vide
+    private String	 note		    = "Non notée";
 
     public Oeuvre() {
 	this.auteurs = new ArrayList<Auteur>();
 	calculerNote();
+	calculerDateDerCommentaire();
     }
 
-    public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, String datePubli, String role, String contenu) {
+    public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, LocalDate datePubli, String role, String contenu) {
 	this.titre = titre;
 	this.auteurs = auteurs;
 	this.nbPage = nbPage;
@@ -28,6 +30,7 @@ public class Oeuvre {
 	this.role = role;
 	this.contenu = contenu;
 	calculerNote();
+	calculerDateDerCommentaire();
     }
 
     @Override
@@ -60,12 +63,24 @@ public class Oeuvre {
 	this.nbPage = nbPage;
     }
 
-    public String getDatePubli() {
+    public LocalDate getDatePubli() {
 	return datePubli;
     }
 
-    public void setDatePubli(String datePubli) {
+    public void setDatePubli(LocalDate datePubli) {
 	this.datePubli = datePubli;
+    }
+
+    public LocalDate getDateDerCommentaire() {
+	return dateDerCommentaire;
+    }
+
+    public void calculerDateDerCommentaire() {
+	MongoDBConnexion mdb = new MongoDBConnexion();
+	LocalDate newDateDerCommentaire = mdb.getDateDerCommentaire(this);
+	if (newDateDerCommentaire != null) {
+	    dateDerCommentaire = newDateDerCommentaire;
+	}
     }
 
     public String getTheme() {
