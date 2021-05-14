@@ -1,5 +1,8 @@
 package model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.mongodb.client.MongoClient;
@@ -20,21 +23,19 @@ public class MongoDBConnexion {
 	return database;
     }
 
-    /**
-     * 
-     */
     public List<Oeuvre> getOeuvres() {
 	return null;
     }
 
     public List<Commentaire> getCommentaires(Oeuvre oeuvre) {
-	return null;
+	return new ArrayList<>();
     }
 
-    public double getNote(Oeuvre oeuvre) {
+    public Double getNote(Oeuvre oeuvre) {
+	System.out.println(getCommentaires(oeuvre).stream().map(commentaire -> commentaire.getNote())
+		.collect(Collectors.summingDouble(Double::doubleValue)) / getCommentaires(oeuvre).stream().count());
 	return getCommentaires(oeuvre).stream().map(commentaire -> commentaire.getNote())
 		.collect(Collectors.summingDouble(Double::doubleValue)) / getCommentaires(oeuvre).stream().count();
-
     }
 
     public List<Formation> getFormations() {
@@ -50,6 +51,11 @@ public class MongoDBConnexion {
     public List<Utilisateur> getUtilisateurs() {
 	// TODO Auto-generated method stub
 	return null;
+    }
+
+    public LocalDate getDateDerCommentaire(Oeuvre oeuvre) {
+	return getCommentaires(oeuvre).stream().sorted(Comparator.comparing(Commentaire::getDatePublication).reversed())
+		.collect(Collectors.toList()).get(0).getDatePublication();
     }
 
 }

@@ -1,7 +1,10 @@
 package controller;
 
 import java.net.URL;
+import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +19,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import model.MongoDBConnexion;
+import model.Oeuvre;
 
 public class AppController implements Initializable {
+
+    private List<Oeuvre> oeuvres;
 
     @FXML
     private StackPane stackPane;
@@ -35,22 +42,22 @@ public class AppController implements Initializable {
     private BorderPane accueilPane;
 
     @FXML
-    private TableView<String> tableNote;
+    private TableView<Oeuvre> tableNote;
 
     @FXML
-    private TableColumn<String, String> tableNoteOeuvre;
+    private TableColumn<Oeuvre, String> tableNoteOeuvre;
 
     @FXML
-    private TableColumn<String, String> tableNoteNote;
+    private TableColumn<Oeuvre, String> tableNoteNote;
 
     @FXML
-    private TableView<String> tableCommentaire;
+    private TableView<Oeuvre> tableCommentaire;
 
     @FXML
-    private TableColumn<String, String> tableCommentaireOeuvre;
+    private TableColumn<Oeuvre, String> tableCommentaireOeuvre;
 
     @FXML
-    private TableColumn<String, String> tableCommentaireDate;
+    private TableColumn<Oeuvre, String> tableCommentaireDate;
 
     @FXML
     private Button consultation;
@@ -65,19 +72,19 @@ public class AppController implements Initializable {
     private BorderPane consultationPane;
 
     @FXML
-    private TableView<String> tableConsultation;
+    private TableView<Oeuvre> tableConsultation;
 
     @FXML
-    private TableColumn<String, String> tableConsultationTitre;
+    private TableColumn<Oeuvre, String> tableConsultationTitre;
 
     @FXML
-    private TableColumn<String, String> tableConsultationTheme;
+    private TableColumn<Oeuvre, String> tableConsultationTheme;
 
     @FXML
-    private TableColumn<String, String> tableConsultationPages;
+    private TableColumn<Oeuvre, String> tableConsultationPages;
 
     @FXML
-    private TableColumn<String, String> tableConsultationDate;
+    private TableColumn<Oeuvre, String> tableConsultationDate;
 
     @FXML
     private Button accueil;
@@ -123,6 +130,8 @@ public class AppController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+	MongoDBConnexion mdb = new MongoDBConnexion();
+	oeuvres = mdb.getOeuvres();
 	ObservableList<Node> childs = stackPane.getChildren();
 	childs.forEach(node -> node.setVisible(false));
 	while (!childs.get(childs.size() - 1).equals(connexionPane)) {
@@ -143,11 +152,29 @@ public class AppController implements Initializable {
 
     @FXML
     void connexion() {
-	accueil();
+	if (verifierLogin()) {
+	    accueil();
+	}
+	loginTextField.clear();
+    }
+
+    private boolean verifierLogin() {
+	// TODO Auto-generated method stub
+	return true;
     }
 
     @FXML
     public void accueil() {
+	tableNote.getItems().clear();
+	tableCommentaire.getItems().clear();
+	oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getNote).reversed()).collect(Collectors.toList())
+		.forEach(oeuvre -> {
+		    tableNote.getItems().add(oeuvre);
+		});
+	oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getDateDerCommentaire).reversed())
+		.collect(Collectors.toList()).forEach(oeuvre -> {
+		    tableCommentaire.getItems().add(oeuvre);
+		});
 	ObservableList<Node> childs = stackPane.getChildren();
 	while (!childs.get(childs.size() - 1).equals(accueilPane)) {
 	    Node topNode = childs.get(childs.size() - 1);
@@ -160,6 +187,9 @@ public class AppController implements Initializable {
 
     @FXML
     public void consultation() {
+	tableConsultation.getItems().clear();
+	oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getTitre)).collect(Collectors.toList())
+		.forEach(oeuvre -> tableConsultation.getItems().add(oeuvre));
 	ObservableList<Node> childs = stackPane.getChildren();
 	while (!childs.get(childs.size() - 1).equals(consultationPane)) {
 	    Node topNode = childs.get(childs.size() - 1);

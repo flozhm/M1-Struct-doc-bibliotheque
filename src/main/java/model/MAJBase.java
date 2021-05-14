@@ -14,35 +14,11 @@ import com.mongodb.client.MongoCollection;
 
 public class MAJBase {
 
-   //Permet de récupérer
-   public static File[] recupFichiers() {
-	  
-	  File repertoire = new File("./import"); // Répertoire dans lequel sont stockés les fichiers
-	  File[] files=repertoire.listFiles(); //Liste des fichiers
-	    
-	  return files;
-   }
-   
-   //Permet d'insérer les données d'un fichier txt dans la base de données s'il n'existe pas déjà
-   //Renvoie false si l'oeuvre existe déjà, true sinon
-   public static boolean insererOeuvreEnBase(Oeuvre oeuvre) {
-	   
-	   //On teste si l'oeuvre existe en base
-	   
-	   //On teste s'il existe déjà dans la BDD (via nom de famille)
-       //Requête BDD
-	   
-	   /*
-	   //Test insert d'un document dans la table commentaire
-	   Document document = new Document();
-       document.append("login", "oiseau54");
-       document.append("datePublication", 2011-03-16);
-       document.append("note", "9.4");
-       document.append("texte", "blablablabla blabla bla");
-       
-       System.out.println(document.toString());
+    // Permet de récupérer
+    public static File[] recupFichiers() {
 
-	   new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
+
+	   /*new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
 	   System.out.println("Document inséré avec succès"); 
 	   */
 	   
@@ -50,7 +26,7 @@ public class MAJBase {
 	   if (1 == 1) {
 		   
 	   }
-	   return true;
+	   return null;
    }
    
    //(Lors de l'insertion d'une oeuvre)
@@ -111,166 +87,158 @@ public class MAJBase {
  	   return true;
    }
    
-   //(Lors de l'insertion d'une nouvelle oeuvre)
-   //Insère une formation en base
-   public static boolean insererFormationEnBase(Formation formation) {
 
-	   //On teste s'il existe déjà dans la BDD (via nom)
-       //Requête BDD
-	   
-	   return false;
-   }
-   
-   //(Via l'application lorsqu'on est connecté)
-   //Insère un commentaire en base
-   public static boolean insererCommentaireEnBase(Commentaire com) {
-	   
-	   Document document = new Document();
-	   Document query;
-	   long count; //Compteur
-	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("commentaire");
-	
-       
-       //On teste s'il existe déjà dans la BDD (via titreOeuvre + login + datePublication)
-       //Requête BDD qui liste tous les titres, logins et dates de publication égales à ceux du commentaire en param
-	   
-	   //db.commentaire.find({"oeuvre": com.getOeuvre(), "datePublication": com.getDatePublication(), "login": com.getLogin()})
-       query = new Document("oeuvre",com.getOeuvre())
-    		   	.append("datePublication", com.getDatePublication())
-    		   	.append("login", com.getLogin());
-       count = collection.countDocuments(query);
-       System.out.println("Requête : " + count);
-       collection.find(query).limit(5).forEach(element -> System.out.println(element));
-       
-       
-       //S'il n'existe pas :
-       if (count == 0) {
+    // (Lors de l'insertion d'une nouvelle oeuvre)
+    // Insère une formation en base
+    public static boolean insererFormationEnBase(Formation formation) {
 
-		   //On créé le document à insérer
-    	   document.append("oeuvre", com.getOeuvre() );
-	       document.append("login", com.getLogin() );
-	       document.append("datePublication", com.getDatePublication());
-	       document.append("note", com.getNote());
-	       document.append("texte", com.getTexte());
-	       
-	       //On l'insère dans la collection commentaire
-	       collection.insertOne(document);
-	       return true;
-	   	} else {
-	  	  //S'il existe on ne fait rien
-	 	   return false;
-	   	}
+	// On teste s'il existe déjà dans la BDD (via nom)
+	// Requête BDD
 
-   }
-   
-  
-   
-   //Déplacer fichier
- 
+	return false;
+    }
 
-	// Permet d'insérer les données d'un fichier txt dans la base de données s'il
-	// n'existe pas déjà
-	// Renvoie false si l'oeuvre existe déjà, true sinon
-	public static boolean importerOeuvreEnBase(File file) {
+    // (Via l'application lorsqu'on est connecté)
+    // Insère un commentaire en base
+    public static boolean insererCommentaireEnBase(Commentaire com) {
 
-		// Tester s'il existe en base
+	Document document = new Document();
+	Document query;
+	long count; // Compteur
+	MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("commentaire");
 
-		// Requête
+	// On teste s'il existe déjà dans la BDD (via titreOeuvre + login +
+	// datePublication)
+	// Requête BDD qui liste tous les titres, logins et dates de publication égales
+	// à ceux du commentaire en param
 
-		// Si ça existe déjà
-		if (1 == 1) {
+	// db.commentaire.find({"oeuvre": com.getOeuvre(), "datePublication":
+	// com.getDatePublication(), "login": com.getLogin()})
+	query = new Document("oeuvre", com.getOeuvre()).append("datePublication", com.getDatePublication())
+		.append("login", com.getLogin());
+	count = collection.countDocuments(query);
+	System.out.println("Requête : " + count);
+	collection.find(query).limit(5).forEach(element -> System.out.println(element));
 
-		}
-		return true;
+	// S'il n'existe pas :
+	if (count == 0) {
+
+	    // On créé le document à insérer
+	    document.append("oeuvre", com.getOeuvre());
+	    document.append("login", com.getLogin());
+	    document.append("datePublication", com.getDatePublication());
+	    document.append("note", com.getNote());
+	    document.append("texte", com.getTexte());
+
+	    // On l'insère dans la collection commentaire
+	    collection.insertOne(document);
+	    return true;
+	}
+	else {
+	    // S'il existe on ne fait rien
+	    return false;
 	}
 
-	//Transforme un fichier en une oeuvre en analysant son contenu
-	public static void lireFichier(File f) {
-		Oeuvre oeuvre = new Oeuvre();
+    }
 
-		try {
-			// Créer l'objet File Reader
-			FileReader fr = new FileReader(f);
-			// Créer l'objet BufferedReader
-			BufferedReader br = new BufferedReader(fr);
-			StringBuffer sb = new StringBuffer();
-			String line;
 
-			boolean isContenu = false;
-			while (((line = br.readLine()) != null)) {
+    // Transforme un fichier en une oeuvre en analysant son contenu
+    public static void lireFichier(File f) {
+	Oeuvre oeuvre = new Oeuvre();
 
-				if (line.split(": ")[0].equals("Titre")) {
-					oeuvre.setTitre(line.split(": ")[1]);
-				} else if (line.split(": ")[0].equals("Auteurs")) {
-					if (line.split(": ")[1].contains(",")) {
-						String[] auteurs;
-						auteurs = line.split(": ")[1].split(", ");
-						for (int i = 0; i < auteurs.length; i++) {
-							oeuvre.getAuteurs().add(auteurs[i]);
-						}
-					} else {
-						oeuvre.getAuteurs().add(line.split(": ")[1]);
-					}
+	try {
+	    // Créer l'objet File Reader
+	    FileReader fr = new FileReader(f);
+	    // Créer l'objet BufferedReader
+	    BufferedReader br = new BufferedReader(fr);
+	    StringBuffer sb = new StringBuffer();
+	    String line;
 
-				} else if (line.split(": ")[0].equals("Pages")) {
-					oeuvre.setNbPage(Integer.parseInt(line.split(": ")[1]));
+	    boolean isContenu = false;
+	    while (((line = br.readLine()) != null)) {
 
-				} else if (line.split(": ")[0].equals("Publication")) {
-					oeuvre.setDatePubli(line.split(": ")[1]);
-
-				} else if (line.split(": ")[0].equals("Theme")) {
-					oeuvre.setTheme(line.split(": ")[1]);
-				} else if (line.split(": ")[0].equals("Roles")) {
-					oeuvre.setRole(line.split(": ")[1]);
-				} else if (line.split(": ")[0].equals("Formations")) {
-					continue;
-
-				} else if (line.split(": ")[0].equals("Universites")) {
-					continue;
-
-				} else if (isContenu && !line.split(": ")[0].equals("Contenu:")) {
-					sb.append(line);
-					sb.append("\n");
-
-				} else {
-
-					isContenu = true;
-
-				}
-
+		if (line.split(": ")[0].equals("Titre")) {
+		    oeuvre.setTitre(line.split(": ")[1]);
+		}
+		else if (line.split(": ")[0].equals("Auteurs")) {
+		    if (line.split(": ")[1].contains(",")) {
+			String[] auteurs;
+			auteurs = line.split(": ")[1].split(", ");
+			for (int i = 0; i < auteurs.length; i++) {
+			    oeuvre.getAuteurs().add(auteurs[i]);
 			}
+		    }
+		    else {
+			oeuvre.getAuteurs().add(line.split(": ")[1]);
+		    }
 
-			fr.close();
-			// System.out.println("Contenu du contenu: ");
-			// System.out.println(sb.toString());
-			oeuvre.setContenu() = sb.toString();
-			System.out.println(oeuvre.toString());
-
-		} catch (
-
-		IOException e) {
-			// A voir ce que l'on fait ici
 		}
+		else if (line.split(": ")[0].equals("Pages")) {
+		    oeuvre.setNbPage(Integer.parseInt(line.split(": ")[1]));
+
+		}
+		else if (line.split(": ")[0].equals("Publication")) {
+		    oeuvre.setDatePubli(line.split(": ")[1]);
+
+		}
+		else if (line.split(": ")[0].equals("Theme")) {
+		    oeuvre.setTheme(line.split(": ")[1]);
+		}
+		else if (line.split(": ")[0].equals("Roles")) {
+		    oeuvre.setRole(line.split(": ")[1]);
+		}
+		else if (line.split(": ")[0].equals("Formations")) {
+		    continue;
+
+		}
+		else if (line.split(": ")[0].equals("Universites")) {
+		    continue;
+
+		}
+		else if (isContenu && !line.split(": ")[0].equals("Contenu:")) {
+		    sb.append(line);
+		    sb.append("\n");
+
+		}
+		else {
+
+		    isContenu = true;
+
+		}
+
+	    }
+
+	    fr.close();
+	    // System.out.println("Contenu du contenu: ");
+	    // System.out.println(sb.toString());
+	    oeuvre.setContenu(sb.toString());
+	    System.out.println(oeuvre.toString());
+
 	}
+	catch (
 
-	// Déplacer fichier
+	IOException e) {
+	    // A voir ce que l'on fait ici
+	}
+    }
 
-   //Vider base
-   public static void viderBDD() {
-	   
-	   //On vide chaque collection
-	   new MongoDBConnexion().getDatabase().getCollection("oeuvre").drop(); //Supprime la collection
-	   new MongoDBConnexion().getDatabase().createCollection("oeuvre"); //La crée
-	   
-	   new MongoDBConnexion().getDatabase().getCollection("utilisateur").drop(); //Supprime la collection
-	   new MongoDBConnexion().getDatabase().createCollection("utilisateur"); //La crée
-	   
-	   new MongoDBConnexion().getDatabase().getCollection("formation").drop(); //Supprime la collection
-	   new MongoDBConnexion().getDatabase().createCollection("formation"); //La crée
-	   
-	   new MongoDBConnexion().getDatabase().getCollection("commentaire").drop(); //Supprime la collection
-	   new MongoDBConnexion().getDatabase().createCollection("commentaire"); //La crée
-	   
+    // Déplacer fichier
 
-   }
+    // Vider base
+    public static void viderBDD() {
+
+	// On vide chaque collection
+	new MongoDBConnexion().getDatabase().getCollection("oeuvre").drop(); // Supprime la collection
+	new MongoDBConnexion().getDatabase().createCollection("oeuvre"); // La crée
+
+	new MongoDBConnexion().getDatabase().getCollection("utilisateur").drop(); // Supprime la collection
+	new MongoDBConnexion().getDatabase().createCollection("utilisateur"); // La crée
+
+	new MongoDBConnexion().getDatabase().getCollection("formation").drop(); // Supprime la collection
+	new MongoDBConnexion().getDatabase().createCollection("formation"); // La crée
+
+	new MongoDBConnexion().getDatabase().getCollection("commentaire").drop(); // Supprime la collection
+	new MongoDBConnexion().getDatabase().createCollection("commentaire"); // La crée
+
+    }
 }
