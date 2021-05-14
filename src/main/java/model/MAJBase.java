@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.Document;
 
@@ -59,8 +61,6 @@ public class MAJBase {
 	   Document query;
 	   long count; //Compteur
 	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
-	   String universiteRattachement = "";
-       String formation = "";
        
 	   //On teste s'il existe déjà dans la BDD (via nom)
        //Requête BDD qui liste tous les utilisateurs via leur nom
@@ -71,37 +71,41 @@ public class MAJBase {
        System.out.println("Requête : " + count);
        collection.find(query).limit(5).forEach(element -> System.out.println(element));
        
-       
-       //S'il n'existe pas :
+	   //On créé le document à insérer
+       //Si le login n'existe pas :
        if (count == 0) {
-		   //On créé le document à insérer
+    	   //On l'ajoute
     	   document.append("login", user.getNom().toLowerCase() );
 	   } else {
-		   //S'il existe déjà on ajoute un numéro correspondant au n-ème nom
-		   //On créé le document à insérer
+		   //S'il existe déjà on ajoute un numéro correspondant au n-ème login
     	   document.append("login", user.getNom().toLowerCase() + count);
 	   }
        
-       universiteRattachement += user.getUniversiteRattachement().get(0);
-       for (int i = 1; i < user.getUniversiteRattachement().size(); i++) {
-    	   universiteRattachement += "," + user.getUniversiteRattachement().get(i);
+       //On créé une liste de documents pour l' ou les universite(s)
+       List<Document> universitesRattachement = new ArrayList<Document>();
+       for (int i = 0; i < user.getUniversiteRattachement().size(); i++) {
+    	   universitesRattachement.add(
+                   new Document("universiteRattachement", user.getUniversiteRattachement().get(i))
+           );
        }
        
-	   formation += "(" + user.getFormation().get(0).getNom();
-	   formation += "," + user.getFormation().get(0).getAnneeEntree();
-	   formation += "," + user.getFormation().get(0).getAnneeSortie() + ")" ;
-       for (int i = 1; i < user.getFormation().size(); i++) {
-    	   formation += ",(" + user.getFormation().get(i).getNom();
-    	   formation += "," + user.getFormation().get(i).getAnneeEntree();
-    	   formation += "," + user.getFormation().get(i).getAnneeSortie() + ")" ;
+     //On créé une liste de documents pour la ou les formation(s)
+       List<Document> formations = new ArrayList<Document>();
+       for(int i = 0; i < user.getFormation().size(); i++){
+    	   formations.add(
+                   new Document("nom", user.getFormation().get(i).getNom())
+                           .append("anneeEntree", user.getFormation().get(i).getAnneeEntree())
+                           .append("anneeSortie", user.getFormation().get(i).getAnneeSortie())
+           );
        }
+       
        
        document.append("nom", user.getNom() );
-       document.append("prenom", user.getPrenom());
-       document.append("universiteRattachement", universiteRattachement);
-       document.append("formation", "[" + formation + "]");
-       document.append("role", user.getRole());
-
+       document.append("prenom", user.getPrenom() );
+       document.append("universiteRattachement", universitesRattachement );
+       document.append("formation", formations);
+       document.append("role", user.getRole().name() ); //Role.valueOf()
+       
        //On ajoute le nouvel utilisateur dans la collection utilisateur
        collection.insertOne(document);
  	   return true;
