@@ -40,32 +40,27 @@ public class App extends Application {
 
     public static void main(String[] args) {
 
-    
+    	//MAJBase.viderBDD();//On vide la BDD
+    	
     	//File[] fichiers = null;
 		//fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
     	
-		//MAJBase.viderBDD();//On vide la BDD 
-		
-        /*Document document = new Document();
-        document.append("login", com.getLogin() );
-        document.append("datePublication", com.getDatePublication());
-        document.append("note", com.getNote());
-        document.append("texte", com.getTexte());
-                
-        new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);*/
-    	
+    	//Insertion commentaire test
     	//Commentaire com = new Commentaire("Oeuvre", "loginFZ58", "2011-03-16", 9.4, "blabla");
         //MAJBase.insererCommentaireEnBase(com);
-    	ArrayList<String> universiteRattachement = new ArrayList<String>();
+    	
+    	//Insertion utilisateur test
+    	/*ArrayList<String> universiteRattachement = new ArrayList<String>();
     	universiteRattachement.add("IDMC");
     	universiteRattachement.add("DME");
     	ArrayList<FormationUtilisateur> formation1 = new ArrayList<FormationUtilisateur>();
     	formation1.add(new FormationUtilisateur("LicenceMIAGE",2016,2019));
     	formation1.add(new FormationUtilisateur("MasterMIAGE",2019,2021));
     	Utilisateur user = new Utilisateur("Pierrat", "Charly", universiteRattachement, formation1, Role.Etudiant);
-        MAJBase.insererUtilisateurEnBase(user);
+        MAJBase.insererUtilisateurEnBase(user);*/
+    	
+    	//Insertion formation test
         
-    	//MAJBase.insererCommentaireEnBase(com);
     
         /*for (int i = 0; i < fichiers.length; i++) { // On boucle sur les fichiers du répertoire
 			MAJBase.lireFichier(fichiers[i]);
