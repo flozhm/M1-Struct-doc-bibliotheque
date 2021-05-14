@@ -16,16 +16,8 @@ public class MAJBase {
 
     // Permet de récupérer
     public static File[] recupFichiers() {
-
-
-	   /*new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
-	   System.out.println("Document inséré avec succès"); 
-	   */
 	   
-	   //Si ça existe déjà
-	   if (1 == 1) {
-		   
-	   }
+
 	   return null;
    }
    
@@ -66,28 +58,74 @@ public class MAJBase {
        }
        
      //On créé une liste de documents pour la ou les formation(s)
-       List<Document> formations = new ArrayList<Document>();
-       for(int i = 0; i < user.getFormation().size(); i++){
-    	   formations.add(
-                   new Document("nom", user.getFormation().get(i).getNom())
-                           .append("anneeEntree", user.getFormation().get(i).getAnneeEntree())
-                           .append("anneeSortie", user.getFormation().get(i).getAnneeSortie())
-           );
-       }
+     List<Document> formations = new ArrayList<Document>();
+     for(int i = 0; i < user.getFormation().size(); i++){
+	     formations.add(
+               new Document("nom", user.getFormation().get(i).getNom())
+                       .append("anneeEntree", user.getFormation().get(i).getAnneeEntree())
+                       .append("anneeSortie", user.getFormation().get(i).getAnneeSortie())
+         );
+     }
        
        
        document.append("nom", user.getNom() );
        document.append("prenom", user.getPrenom() );
        document.append("universiteRattachement", universitesRattachement );
        document.append("formation", formations);
-       document.append("role", user.getRole().name() ); //Role.valueOf()
+       document.append("role", user.getRole().name() );
        
        //On ajoute le nouvel utilisateur dans la collection utilisateur
        collection.insertOne(document);
  	   return true;
    }
    
+   //(Lors de l'insertion d'une oeuvre)
+   //Insère une oeuvre en base
+   public static boolean insererOeuvreEnBase(Oeuvre oeuvre) {
+	   // On teste si elle existe déjà dans la BDD (via titre)
 
+	   Document document = new Document();
+	   Document query;
+	   long count; // Compteur
+	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("oeuvre");
+	   
+	   // On teste s'il existe déjà dans la BDD (via le titre de l'oeuvre)
+	   // Requête BDD qui liste tous les titres égaux à ceux de l'oeuvre en param
+	   query = new Document("oeuvre", oeuvre.getTitre());
+	   count = collection.countDocuments(query);
+	   System.out.println("Requête : " + count);
+	   collection.find(query).limit(5).forEach(element -> System.out.println(element));
+	   
+	   // Si l'oeuvre n'existe pas :
+	   if (count == 0) {
+		   //On créé le document
+		   		   
+		     //On créé une liste de documents pour la ou les formation(s)
+		     List<Document> auteurs = new ArrayList<Document>();
+		     for(int i = 0; i < oeuvre.getAuteurs().size(); i++){
+		    	 auteurs.add(
+		               new Document("nom", oeuvre.getAuteurs().get(i).getNom())
+		                       .append("prenom", oeuvre.getAuteurs().get(i).getPrenom())
+		         );
+		     }
+		   		   
+		   document.append("titre", oeuvre.getTitre());
+		   document.append("auteurs", auteurs);
+		   document.append("nbPage", oeuvre.getNbPage());
+		   document.append("datePublication", oeuvre.getDatePubli());
+		   document.append("thematique", oeuvre.getTheme());
+		   document.append("contenu", oeuvre.getContenu());
+		   
+		   collection.insertOne(document);
+		   return true;
+	   }
+	   else {
+		   //On ne fait rien
+	   }
+	   
+	   return false;
+	   
+   }
     // (Lors de l'insertion d'une nouvelle oeuvre)
     // Insère une formation en base
     public static boolean insererFormationEnBase(Formation formation) {

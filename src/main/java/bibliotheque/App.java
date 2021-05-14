@@ -45,6 +45,13 @@ public class App extends Application {
     	//File[] fichiers = null;
 		//fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
     	
+        /*for (int i = 0; i < fichiers.length; i++) { // On boucle sur les fichiers du répertoire
+			MAJBase.lireFichier(fichiers[i]);
+			// String fileName = fichiers[i].getName(); // On récupère le nom du fichier
+			// MAJBase.importerOeuvreEnBase(fichiers[i]); //On insère les données des
+			// fichiers un par un dans la BDD
+		}*/
+    	
     	//Insertion commentaire test
     	//Commentaire com = new Commentaire("Oeuvre", "loginFZ58", "2011-03-16", 9.4, "blabla");
         //MAJBase.insererCommentaireEnBase(com);
@@ -62,12 +69,7 @@ public class App extends Application {
     	//Insertion formation test
         
     
-        /*for (int i = 0; i < fichiers.length; i++) { // On boucle sur les fichiers du répertoire
-			MAJBase.lireFichier(fichiers[i]);
-			// String fileName = fichiers[i].getName(); // On récupère le nom du fichier
-			// MAJBase.importerOeuvreEnBase(fichiers[i]); //On insère les données des
-			// fichiers un par un dans la BDD
-		}*/
+
 
 
     	//launch(); // On lance l'application*/
