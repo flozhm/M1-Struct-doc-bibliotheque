@@ -96,7 +96,7 @@ public class MAJBase {
 	   System.out.println("Requête : " + count);
 	   collection.find(query).limit(5).forEach(element -> System.out.println(element));
 	   
-	   // Si l'oeuvre n'existe pas :
+	   // Si l'oeuvre n'existe pas : 
 	   if (count == 0) {
 		   //On créé le document
 		   		   
