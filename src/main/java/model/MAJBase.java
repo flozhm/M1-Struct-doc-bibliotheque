@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.Document;
 
@@ -15,95 +17,76 @@ public class MAJBase {
     // Permet de récupérer
     public static File[] recupFichiers() {
 
-	File repertoire = new File("./import"); // Répertoire dans lequel sont stockés les fichiers
-	File[] files = repertoire.listFiles(); // Liste des fichiers
 
-	return files;
-    }
-
-    // Permet d'insérer les données d'un fichier txt dans la base de données s'il
-    // n'existe pas déjà
-    // Renvoie false si l'oeuvre existe déjà, true sinon
-    public static boolean insererOeuvreEnBase(Oeuvre oeuvre) {
-
-	// On teste si l'oeuvre existe en base
-
-	// On teste s'il existe déjà dans la BDD (via nom de famille)
-	// Requête BDD
-
-	/*
-	 * //Test insert d'un document dans la table commentaire Document document = new
-	 * Document(); document.append("login", "oiseau54");
-	 * document.append("datePublication", 2011-03-16); document.append("note",
-	 * "9.4"); document.append("texte", "blablablabla blabla bla");
-	 * 
-	 * System.out.println(document.toString()); new
-	 * MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(
-	 * document); System.out.println("Document inséré avec succès");
-	 */
-
-	// Si ça existe déjà
-	if (1 == 1) {
-
-	}
-	return true;
-    }
-
-    // (Lors de l'insertion d'une oeuvre)
-    // Insère un utilisateur en base
-    public static boolean insererUtilisateurEnBase(Utilisateur user) {
-
-	Document document = new Document();
-	Document query;
-	long count; // Compteur
-	MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
-	String universiteRattachement = "";
-	String formation = "";
-
-	// On teste s'il existe déjà dans la BDD (via nom)
-	// Requête BDD qui liste tous les utilisateurs via leur nom
-
-	// db.utilisateur.find({"nom": com.getNom()})
-	query = new Document("nom", user.getNom());
-	count = collection.countDocuments(query);
-	System.out.println("Requête : " + count);
-	collection.find(query).limit(5).forEach(element -> System.out.println(element));
-
-	// S'il n'existe pas :
-	if (count == 0) {
-	    // On créé le document à insérer
-	    document.append("login", user.getNom().toLowerCase());
-	}
-	else {
-	    // S'il existe déjà on ajoute un numéro correspondant au n-ème nom
-	    // On créé le document à insérer
-	    document.append("login", user.getNom().toLowerCase() + count);
-	}
-
-	universiteRattachement += user.getUniversiteRattachement().get(0);
-	for (int i = 1; i < user.getUniversiteRattachement().size(); i++) {
-	    universiteRattachement += "," + user.getUniversiteRattachement().get(i);
-	}
-
-	formation += "(" + user.getFormation().get(0).getNom();
-	formation += "," + user.getFormation().get(0).getAnneeEntree();
-	formation += "," + user.getFormation().get(0).getAnneeSortie() + ")";
-	for (int i = 1; i < user.getFormation().size(); i++) {
-	    formation += ",(" + user.getFormation().get(i).getNom();
-	    formation += "," + user.getFormation().get(i).getAnneeEntree();
-	    formation += "," + user.getFormation().get(i).getAnneeSortie() + ")";
-	}
-
-	document.append("nom", user.getNom());
-	document.append("prenom", user.getPrenom());
-	document.append("universiteRattachement", universiteRattachement);
-	document.append("formation", "[" + formation + "]");
-	document.append("role", user.getRole());
-
-	// On ajoute le nouvel utilisateur dans la collection utilisateur
-	collection.insertOne(document);
-	return true;
-    }
+	   /*new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
+	   System.out.println("Document inséré avec succès"); 
+	   */
+	   
+	   //Si ça existe déjà
+	   if (1 == 1) {
+		   
+	   }
+	   return null;
+   }
+   
+   //(Lors de l'insertion d'une oeuvre)
+   //Insère un utilisateur en base
+   public static boolean insererUtilisateurEnBase(Utilisateur user) {
+	   
+	   Document document = new Document();
+	   Document query;
+	   long count; //Compteur
+	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
+       
+	   //On teste s'il existe déjà dans la BDD (via nom)
+       //Requête BDD qui liste tous les utilisateurs via leur nom
+	   
+	   //db.utilisateur.find({"nom": com.getNom()})
+       query = new Document("nom",user.getNom());
+       count = collection.countDocuments(query);
+       System.out.println("Requête : " + count);
+       collection.find(query).limit(5).forEach(element -> System.out.println(element));
+       
+	   //On créé le document à insérer
+       //Si le login n'existe pas :
+       if (count == 0) {
+    	   //On l'ajoute
+    	   document.append("login", user.getNom().toLowerCase() );
+	   } else {
+		   //S'il existe déjà on ajoute un numéro correspondant au n-ème login
+    	   document.append("login", user.getNom().toLowerCase() + count);
+	   }
+       
+       //On créé une liste de documents pour l' ou les universite(s)
+       List<Document> universitesRattachement = new ArrayList<Document>();
+       for (int i = 0; i < user.getUniversiteRattachement().size(); i++) {
+    	   universitesRattachement.add(
+                   new Document("universiteRattachement", user.getUniversiteRattachement().get(i))
+           );
+       }
+       
+     //On créé une liste de documents pour la ou les formation(s)
+       List<Document> formations = new ArrayList<Document>();
+       for(int i = 0; i < user.getFormation().size(); i++){
+    	   formations.add(
+                   new Document("nom", user.getFormation().get(i).getNom())
+                           .append("anneeEntree", user.getFormation().get(i).getAnneeEntree())
+                           .append("anneeSortie", user.getFormation().get(i).getAnneeSortie())
+           );
+       }
+       
+       
+       document.append("nom", user.getNom() );
+       document.append("prenom", user.getPrenom() );
+       document.append("universiteRattachement", universitesRattachement );
+       document.append("formation", formations);
+       document.append("role", user.getRole().name() ); //Role.valueOf()
+       
+       //On ajoute le nouvel utilisateur dans la collection utilisateur
+       collection.insertOne(document);
+ 	   return true;
+   }
+   
 
     // (Lors de l'insertion d'une nouvelle oeuvre)
     // Insère une formation en base
@@ -158,23 +141,6 @@ public class MAJBase {
 
     }
 
-    // Déplacer fichier
-
-    // Permet d'insérer les données d'un fichier txt dans la base de données s'il
-    // n'existe pas déjà
-    // Renvoie false si l'oeuvre existe déjà, true sinon
-    public static boolean importerOeuvreEnBase(File file) {
-
-	// Tester s'il existe en base
-
-	// Requête
-
-	// Si ça existe déjà
-	if (1 == 1) {
-
-	}
-	return true;
-    }
 
     // Transforme un fichier en une oeuvre en analysant son contenu
     public static void lireFichier(File f) {
@@ -245,7 +211,7 @@ public class MAJBase {
 	    fr.close();
 	    // System.out.println("Contenu du contenu: ");
 	    // System.out.println(sb.toString());
-	    oeuvre.setContenu() = sb.toString();
+	    oeuvre.setContenu(sb.toString());
 	    System.out.println(oeuvre.toString());
 
 	}
