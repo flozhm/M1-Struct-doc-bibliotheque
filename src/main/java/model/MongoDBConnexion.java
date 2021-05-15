@@ -80,7 +80,8 @@ public class MongoDBConnexion {
 	String[] dateTab = date.split("-");
 	return LocalDate.of(Integer.parseInt(dateTab[0]), Integer.parseInt(dateTab[1]), Integer.parseInt(dateTab[2]));
     }
-
+    
+    //Transforme une date en string
     public static String localDatetoString(LocalDate date) {
 	return date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth();
     }

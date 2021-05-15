@@ -145,7 +145,7 @@ public class MAJBase {
 
 	// db.commentaire.find({"oeuvre": com.getOeuvre(), "datePublication":
 	// com.getDatePublication(), "login": com.getLogin()})
-	query = new Document("oeuvre", com.getOeuvre()).append("datePublication", com.getDatePublication())
+	query = new Document("oeuvre", com.getOeuvre()).append("datePublication", MongoDBConnexion.localDatetoString(com.getDatePublication()))
 		.append("login", com.getLogin());
 	count = collection.countDocuments(query);
 	System.out.println("Requête : " + count);
@@ -157,7 +157,7 @@ public class MAJBase {
 	    // On créé le document à insérer
 	    document.append("oeuvre", com.getOeuvre());
 	    document.append("login", com.getLogin());
-	    document.append("datePublication", com.getDatePublication());
+	    document.append("datePublication", MongoDBConnexion.localDatetoString(com.getDatePublication()));
 	    document.append("note", com.getNote());
 	    document.append("texte", com.getTexte());
 

@@ -12,7 +12,7 @@ public class Oeuvre {
     private LocalDate	 datePubli;
     private LocalDate	 dateDerCommentaire = null;
     private String	 theme;
-    private String	 role;
+    private Role	 role;
     private String	 contenu;
     private String	 note		    = "Non notée";
 
@@ -22,7 +22,7 @@ public class Oeuvre {
 	calculerDateDerCommentaire();
     }
 
-    public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, LocalDate datePubli, String role, String contenu) {
+    public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, LocalDate datePubli, Role role, String contenu) {
 	this.titre = titre;
 	this.auteurs = auteurs;
 	this.nbPage = nbPage;
@@ -91,11 +91,11 @@ public class Oeuvre {
 	this.theme = theme;
     }
 
-    public String getRole() {
+    public Role getRole() {
 	return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
 	this.role = role;
     }
 
