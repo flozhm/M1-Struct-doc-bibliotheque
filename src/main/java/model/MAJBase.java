@@ -101,12 +101,13 @@ public class MAJBase {
 		                       .append("prenom", oeuvre.getAuteurs().get(i).getPrenom())
 		         );
 		     }
-		   		   
+		   
 		   document.append("titre", oeuvre.getTitre());
 		   document.append("auteurs", auteurs);
 		   document.append("nbPage", oeuvre.getNbPage());
-		   document.append("datePublication", oeuvre.getDatePubli());
+		   document.append("datePublication", MongoDBConnexion.localDatetoString(oeuvre.getDatePubli()));
 		   document.append("thematique", oeuvre.getTheme());
+		   document.append("role", oeuvre.getRole().name());
 		   document.append("contenu", oeuvre.getContenu());
 		   
 		   collection.insertOne(document);

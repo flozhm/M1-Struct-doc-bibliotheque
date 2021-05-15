@@ -59,9 +59,9 @@ public class App extends Application {
 	
 	//Insertion oeuvre test
 	ArrayList<Auteur> auteurs = new ArrayList<Auteur>();
-	Oeuvre oeuvre = new Oeuvre("Oeuvre1", auteurs, 50, LocalDate.of(2011, 3, 16), String role, String contenu);
-	
-	insererOeuvreEnBase(oeuvre);
+	auteurs.add(new Auteur("Jean","Massing"));
+	Oeuvre oeuvre = new Oeuvre("Oeuvre1", auteurs, 50, LocalDate.of(2011, 3, 16), Role.Etudiant, "bla bla bla", true);
+	MAJBase.insererOeuvreEnBase(oeuvre);
 	
 	//Insertion formation test
    
