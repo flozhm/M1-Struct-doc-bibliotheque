@@ -67,7 +67,7 @@ public class App extends Application {
 	 * MAJBase.insererFormationEnBase(formation);
 	 */
 
-	// File[] fichiers = null;
+	// File[] fichiers = null; 
 	// fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
 	/*
 	 * for (int i = 0; i < fichiers.length; i++) { // On boucle sur les fichiers du
