@@ -14,14 +14,14 @@ import com.mongodb.client.MongoCollection;
 
 public class MAJBase {
 
-    // Permet de récupérer
+    // Permet de récupérer les fichiers à traiter
     public static File[] recupFichiers() {
 	   return null;
    }
    
    //(Lors de l'insertion d'une oeuvre)
    //Insère un utilisateur en base
-   public static boolean insererUtilisateurEnBase(Utilisateur user) {
+   public static void insererUtilisateurEnBase(Utilisateur user) {
 	   Document document = new Document();
 	   Document query;
 	   long count; //Compteur
@@ -62,14 +62,14 @@ public class MAJBase {
        document.append("formations", formations);
        document.append("role", user.getRole().name() );
        
-       //On ajoute le nouvel utilisateur dans la collection utilisateur
-       collection.insertOne(document);
- 	   return true;
+    //On ajoute le nouvel utilisateur dans la collection utilisateur
+    collection.insertOne(document);
+ 
    }
    
    //(Lors de l'insertion d'une oeuvre)
    //Insère une oeuvre en base
-   public static boolean insererOeuvreEnBase(Oeuvre oeuvre) {
+   public static void insererOeuvreEnBase(Oeuvre oeuvre) {
 	   // On teste si elle existe déjà dans la BDD (via titre)
 
 	   Document document = new Document();
@@ -79,7 +79,7 @@ public class MAJBase {
 	   
 	   // On teste s'il existe déjà dans la BDD (via le titre de l'oeuvre)
 	   // Requête BDD qui liste tous les titres égaux à ceux de l'oeuvre en param
-	   query = new Document("oeuvre", oeuvre.getTitre());
+	   query = new Document("titre", oeuvre.getTitre());
 	   count = collection.countDocuments(query);
 	   System.out.println("Requête : " + count);
 	   collection.find(query).limit(5).forEach(element -> System.out.println(element));
@@ -88,7 +88,7 @@ public class MAJBase {
 	   if (count == 0) {
 		   //On créé le document
 		   		   
-		     //On créé une liste de documents pour la ou les formation(s)
+		     //On créé une liste de documents pour le ou les auteurs(s)
 		     List<Document> auteurs = new ArrayList<Document>();
 		     for(int i = 0; i < oeuvre.getAuteurs().size(); i++){
 		    	 auteurs.add(
@@ -97,6 +97,7 @@ public class MAJBase {
 		         );
 		     }
 		   
+		   //Creation du document à inserer
 		   document.append("titre", oeuvre.getTitre());
 		   document.append("auteurs", auteurs);
 		   document.append("nbPage", oeuvre.getNbPage());
@@ -105,26 +106,57 @@ public class MAJBase {
 		   document.append("role", oeuvre.getRole().name());
 		   document.append("contenu", oeuvre.getContenu());
 		   
+		 //On ajoute la nouvelle oeuvre dans la collection oeuvre
 		   collection.insertOne(document);
-		   return true;
 	   }
-	   else {
-		   //On ne fait rien
-	   }
-	   return false;
+	   //Si elle existe déjà on ne fait rien
     }
    
     // (Lors de l'insertion d'une nouvelle oeuvre)
     // Insère une formation en base
-    public static boolean insererFormationEnBase(Formation formation) {
+    public static void insererFormationEnBase(Formation formation) {
 	// On teste s'il existe déjà dans la BDD (via nom)
-	// Requête BDD
-	return false;
+    
+ 	   Document document = new Document();
+ 	   Document query;
+ 	   long count; // Compteur
+ 	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("formation");
+ 	   
+ 	   // On teste si elle existe déjà dans la BDD (via le nom)
+ 	   // Requête BDD qui liste tous les noms égaux à ceux de la formation en param
+ 	   query = new Document("nom", formation.getNom());
+ 	   count = collection.countDocuments(query);
+ 	   System.out.println("Requête : " + count);
+ 	   collection.find(query).limit(5).forEach(element -> System.out.println(element));
+ 	   
+ 	// Si la formation n'existe pas : 
+	   if (count == 0) {
+		   //On créé le document
+		   		   
+		     //On créé une liste de documents pour le ou les universite(s)
+		     List<Document> universites = new ArrayList<Document>();
+		     for(int i = 0; i < formation.getUniversites().size(); i++){
+		    	 universites.add(
+		               new Document("nom", formation.getUniversites().get(i))
+		         );
+		     }
+		   
+		   //Creation du document à inserer
+		   document.append("nom", formation.getNom());
+		   document.append("niveau", formation.getNiveau());
+		   document.append("nbPlace", formation.getNbPlace());
+		   document.append("universites", universites);
+
+		 //On ajoute la nouvelle formation dans la collection formation
+		 collection.insertOne(document);
+	   }
+	   //Si elle existe déjà on ne fait rien
+ 	   
     }
 
     // (Via l'application lorsqu'on est connecté)
     // Insère un commentaire en base
-    public static boolean insererCommentaireEnBase(Commentaire com) {
+    public static void insererCommentaireEnBase(Commentaire com) {
 	Document document = new Document();
 	Document query;
 	long count; // Compteur
@@ -154,12 +186,9 @@ public class MAJBase {
 
 	    // On l'insère dans la collection commentaire
 	    collection.insertOne(document);
-	    return true;
+
 	}
-	else {
-	    // S'il existe on ne fait rien
-	    return false;
-	}
+	// S'il existe on ne fait rien
 
     }
 
