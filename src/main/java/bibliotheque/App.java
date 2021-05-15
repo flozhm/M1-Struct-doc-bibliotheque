@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import model.Auteur;
 import model.Commentaire;
 import model.FormationUtilisateur;
@@ -43,12 +44,11 @@ public class App extends Application {
 
     public static void main(String[] args) {
 
-    //MAJBase.viderBDD();//On vide la BDD 
+   // MAJBase.viderBDD();//On vide la BDD 
     	
 	//Insertion commentaire test 
-	//Commentaire com = new Commentaire("Oeuvre", "loginFZ58", "2011-03-16", 9.4, "blabla");
-    //MAJBase.insererCommentaireEnBase(com);
-    //new LocalDate(0, 0, 0);
+	//Commentaire com = new Commentaire("Oeuvre", "loginFZ58", LocalDate.of(2011, 3, 16), 9.4, "blabla"); //YYYY-MM-DD
+    //MAJBase.insererCommentaireEnBase(com); 
 	
 	//Insertion utilisateur test
 	/*ArrayList<FormationUtilisateur> formation1 = new ArrayList<FormationUtilisateur>();
@@ -58,10 +58,10 @@ public class App extends Application {
     MAJBase.insererUtilisateurEnBase(user);*/
 	
 	//Insertion oeuvre test
-	/*ArrayList<Auteur> auteurs = new ArrayList<Auteur>();
-	Oeuvre oeuvre = new Oeuvre("Oeuvre1", auteurs, int nbPage, LocalDate datePubli, String role, String contenu);
+	ArrayList<Auteur> auteurs = new ArrayList<Auteur>();
+	Oeuvre oeuvre = new Oeuvre("Oeuvre1", auteurs, 50, LocalDate.of(2011, 3, 16), String role, String contenu);
 	
-	insererOeuvreEnBase(oeuvre);*/
+	insererOeuvreEnBase(oeuvre);
 	
 	//Insertion formation test
    
@@ -77,7 +77,7 @@ public class App extends Application {
 	 * fichiers un par un dans la BDD }
 	 */
 
-	launch(); // On lance l'application*/
+	//launch(); // On lance l'application*/
 
     }
 }
