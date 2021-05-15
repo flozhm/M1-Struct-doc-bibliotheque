@@ -48,6 +48,9 @@ public class AppController implements Initializable {
     private BorderPane connexionPane;
 
     @FXML
+    private Label connexionLabel;
+
+    @FXML
     private TextField loginTextField;
 
     @FXML
