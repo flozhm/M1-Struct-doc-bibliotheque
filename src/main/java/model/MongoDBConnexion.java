@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
@@ -15,8 +16,8 @@ public class MongoDBConnexion {
     private MongoDatabase database;
 
     public MongoDBConnexion() {
-		mongoClient = MongoClients.create();
-		database = mongoClient.getDatabase("bibliotheque");
+	mongoClient = MongoClients.create();
+	database = mongoClient.getDatabase("bibliotheque");
     }
 
     public MongoDatabase getDatabase() {
@@ -24,33 +25,50 @@ public class MongoDBConnexion {
     }
 
     public List<Oeuvre> getOeuvres() {
-	return null;
+	List<Oeuvre> oeuvres = new ArrayList<Oeuvre>();
+	database.getCollection("oeuvre").find().forEach(oeuvre -> {
+	    List<Auteur> auteurs = new ArrayList<Auteur>();
+	    // TODO Récupérer la liste des auteurs
+	    oeuvres.add(new Oeuvre((String) oeuvre.get("titre"), auteurs, (int) oeuvre.get("nbPage"),
+		    stringToLocalDate((String) oeuvre.get("datePublication")), (String) oeuvre.get("role"),
+		    (String) oeuvre.get("contenu")));
+	});
+	return oeuvres;
     }
 
     public List<Commentaire> getCommentaires(Oeuvre oeuvre) {
-	return new ArrayList<>();
+	List<Commentaire> commentaires = new ArrayList<Commentaire>();
+	BasicDBObject query = new BasicDBObject();
+	query.put("oeuvre", oeuvre.getTitre());
+	database.getCollection("commentaire").find(query)
+		.forEach(commentaire -> commentaires.add(new Commentaire((String) commentaire.get("oeuvre"),
+			(String) commentaire.get("login"),
+			stringToLocalDate((String) commentaire.get("datePublication")),
+			Double.parseDouble((String) commentaire.get("note")), (String) commentaire.get("texte"))));
+	return commentaires;
     }
 
     public Double getNote(Oeuvre oeuvre) {
-	System.out.println(getCommentaires(oeuvre).stream().map(commentaire -> commentaire.getNote())
-		.collect(Collectors.summingDouble(Double::doubleValue)) / getCommentaires(oeuvre).stream().count());
 	return getCommentaires(oeuvre).stream().map(commentaire -> commentaire.getNote())
 		.collect(Collectors.summingDouble(Double::doubleValue)) / getCommentaires(oeuvre).stream().count();
     }
 
     public List<Formation> getFormations() {
-	// TODO Auto-generated method stub
-	return null;
+	List<Formation> formations = new ArrayList<Formation>();
+	// TODO
+	return formations;
     }
 
     public List<FormationUtilisateur> getFormationUtilisateurs() {
-	// TODO Auto-generated method stub
-	return null;
+	List<FormationUtilisateur> formationsUtilisateurs = new ArrayList<FormationUtilisateur>();
+	// TODO
+	return formationsUtilisateurs;
     }
 
     public List<Utilisateur> getUtilisateurs() {
-	// TODO Auto-generated method stub
-	return null;
+	List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+	// TODO
+	return utilisateurs;
     }
 
     public LocalDate getDateDerCommentaire(Oeuvre oeuvre) {
@@ -58,4 +76,12 @@ public class MongoDBConnexion {
 		.collect(Collectors.toList()).get(0).getDatePublication();
     }
 
+    public static LocalDate stringToLocalDate(String date) {
+	String[] dateTab = date.split(":");
+	return LocalDate.of(Integer.parseInt(dateTab[0]), Integer.parseInt(dateTab[1]), Integer.parseInt(dateTab[2]));
+    }
+
+    public static String localDatetoString(LocalDate date) {
+	return date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth();
+    }
 }
