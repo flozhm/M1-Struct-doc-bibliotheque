@@ -43,9 +43,9 @@ public class App extends Application {
 
     public static void main(String[] args) {
 
-    //MAJBase.viderBDD();//On vide la BDD
+    //MAJBase.viderBDD();//On vide la BDD 
     	
-	//Insertion commentaire test
+	//Insertion commentaire test 
 	//Commentaire com = new Commentaire("Oeuvre", "loginFZ58", "2011-03-16", 9.4, "blabla");
     //MAJBase.insererCommentaireEnBase(com);
     //new LocalDate(0, 0, 0);
@@ -64,6 +64,7 @@ public class App extends Application {
 	insererOeuvreEnBase(oeuvre);*/
 	
 	//Insertion formation test
+    	//
     
         
 	//File[] fichiers = null;
