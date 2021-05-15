@@ -68,7 +68,7 @@ public class MAJBase {
    }
    
    //(Lors de l'insertion d'une oeuvre)
-   //Insère une oeuvre en base 
+   //Insère une oeuvre en base
    public static void insererOeuvreEnBase(Oeuvre oeuvre) {
 	   // On teste si elle existe déjà dans la BDD (via titre)
 
