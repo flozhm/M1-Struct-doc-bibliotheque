@@ -239,6 +239,7 @@ public class AppController implements Initializable {
 
     private boolean verifierLogin() {
 	// TODO Auto-generated method stub
+	// TODO RECUPERER USER
 	return true;
     }
 
@@ -247,10 +248,12 @@ public class AppController implements Initializable {
 	tableNote.getItems().clear();
 	tableCommentaire.getItems().clear();
 	if (oeuvres != null && !oeuvres.isEmpty()) {
+	    // TODO FILTRER ROLE
 	    oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getNote).reversed()).collect(Collectors.toList())
 		    .forEach(oeuvre -> {
 			tableNote.getItems().add(oeuvre);
 		    });
+	    // TODO FILTRER ROLE
 	    oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getDateDerCommentaire).reversed())
 		    .collect(Collectors.toList()).forEach(oeuvre -> {
 			tableCommentaire.getItems().add(oeuvre);
@@ -270,6 +273,7 @@ public class AppController implements Initializable {
     public void consultation() {
 	tableConsultation.getItems().clear();
 	if (oeuvres != null && !oeuvres.isEmpty()) {
+	    // TODO FILTRER ROLE
 	    oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getTitre)).collect(Collectors.toList())
 		    .forEach(oeuvre -> tableConsultation.getItems().add(oeuvre));
 	}

@@ -72,8 +72,14 @@ public class MongoDBConnexion {
     }
 
     public LocalDate getDateDerCommentaire(Oeuvre oeuvre) {
-	return getCommentaires(oeuvre).stream().sorted(Comparator.comparing(Commentaire::getDatePublication).reversed())
-		.collect(Collectors.toList()).get(0).getDatePublication();
+	if (getCommentaires(oeuvre).stream().count() > 0) {
+	    return getCommentaires(oeuvre).stream()
+		    .sorted(Comparator.comparing(Commentaire::getDatePublication).reversed())
+		    .collect(Collectors.toList()).get(0).getDatePublication();
+	}
+	else {
+	    return null;
+	}
     }
 
     public static LocalDate stringToLocalDate(String date) {
@@ -81,7 +87,6 @@ public class MongoDBConnexion {
 	return LocalDate.of(Integer.parseInt(dateTab[0]), Integer.parseInt(dateTab[1]), Integer.parseInt(dateTab[2]));
     }
 
-    // Transforme une date en string
     public static String localDatetoString(LocalDate date) {
 	return date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth();
     }
@@ -105,7 +110,6 @@ public class MongoDBConnexion {
 	}
     }
 
-    // Transforme une date en string
     public static String roletoString(Role role) {
 	return role.name().toLowerCase();
     }
