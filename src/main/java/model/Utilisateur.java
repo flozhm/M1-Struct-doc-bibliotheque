@@ -11,7 +11,6 @@ public class Utilisateur {
 	private List<FormationUtilisateur> formation;
 	private Role role;
 
-
 	public Utilisateur(String nom, String prenom, String universiteRattachement,
 			           List<FormationUtilisateur> formation, Role role) {
 		this.login = null;
@@ -22,10 +21,10 @@ public class Utilisateur {
 		this.role = role;
 	}
 	
-	
 	public String getLogin() {
 		return login;
 	}
+	
 	public String getNom() {
 		return nom;
 	}
@@ -36,15 +35,12 @@ public class Utilisateur {
 	public String getUniversiteRattachement() {
 		return universiteRattachement;
 	}
+
 	public List<FormationUtilisateur> getFormation() {
 		return formation;
 	}
 
-
 	public Role getRole() {
 		return role;
 	}
-	
-	
-
 }

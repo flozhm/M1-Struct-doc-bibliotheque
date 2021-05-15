@@ -30,8 +30,8 @@ public class MongoDBConnexion {
 	    List<Auteur> auteurs = new ArrayList<Auteur>();
 	    // TODO Récupérer la liste des auteurs
 	    oeuvres.add(new Oeuvre((String) oeuvre.get("titre"), auteurs, (int) oeuvre.get("nbPage"),
-		    stringToLocalDate((String) oeuvre.get("datePublication")), (String) oeuvre.get("role"),
-		    (String) oeuvre.get("contenu")));
+		    stringToLocalDate((String) oeuvre.get("datePublication")),
+		    stringToRole((String) oeuvre.get("role")), (String) oeuvre.get("contenu")));
 	});
 	return oeuvres;
     }
@@ -80,9 +80,33 @@ public class MongoDBConnexion {
 	String[] dateTab = date.split("-");
 	return LocalDate.of(Integer.parseInt(dateTab[0]), Integer.parseInt(dateTab[1]), Integer.parseInt(dateTab[2]));
     }
-    
-    //Transforme une date en string
+
+    // Transforme une date en string
     public static String localDatetoString(LocalDate date) {
 	return date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth();
+    }
+
+    public static Role stringToRole(String role) {
+	switch (role) {
+	    case "etudiant":
+		return Role.Etudiant;
+
+	    case "professeur":
+		return Role.Professeur;
+
+	    case "chercheur":
+		return Role.Chercheur;
+
+	    case "administratif":
+		return Role.Administratif;
+
+	    default:
+		return null;
+	}
+    }
+
+    // Transforme une date en string
+    public static String roletoString(Role role) {
+	return role.name().toLowerCase();
     }
 }
