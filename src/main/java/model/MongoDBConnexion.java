@@ -77,7 +77,11 @@ public class MongoDBConnexion {
     }
 
     public static LocalDate stringToLocalDate(String date) {
-	// TODO
-	return LocalDate.of(0, 0, 0);
+	String[] dateTab = date.split(":");
+	return LocalDate.of(Integer.parseInt(dateTab[0]), Integer.parseInt(dateTab[1]), Integer.parseInt(dateTab[2]));
+    }
+
+    public static String localDatetoString(LocalDate date) {
+	return date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth();
     }
 }
