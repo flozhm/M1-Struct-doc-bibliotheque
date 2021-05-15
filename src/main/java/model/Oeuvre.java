@@ -10,11 +10,11 @@ public class Oeuvre {
     private List<Auteur> auteurs;
     private int		 nbPage;
     private LocalDate	 datePubli;
-    private LocalDate	 dateDerCommentaire = null; //Pas dans la BDD (calculée)
+    private LocalDate	 dateDerCommentaire = null;	   // Pas dans la BDD (calculée)
     private String	 theme;
     private Role	 role;
     private String	 contenu;
-    private String	 note = "Non notée"; //Pas dans la BDD (calculée)
+    private String	 note		    = "Non notée"; // Pas dans la BDD (calculée)
 
     public Oeuvre() {
 	this.auteurs = new ArrayList<Auteur>();
@@ -22,8 +22,9 @@ public class Oeuvre {
 	calculerDateDerCommentaire();
     }
 
-    //Pour les tests
-    public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, LocalDate datePubli, Role role, String contenu, Boolean b) {
+    // Pour les tests
+    public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, LocalDate datePubli, Role role, String contenu,
+	    Boolean b) {
 	this.titre = titre;
 	this.auteurs = auteurs;
 	this.nbPage = nbPage;
@@ -31,7 +32,7 @@ public class Oeuvre {
 	this.role = role;
 	this.contenu = contenu;
     }
-    
+
     public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, LocalDate datePubli, Role role, String contenu) {
 	this.titre = titre;
 	this.auteurs = auteurs;
@@ -82,6 +83,7 @@ public class Oeuvre {
     }
 
     public LocalDate getDateDerCommentaire() {
+	calculerDateDerCommentaire();
 	return dateDerCommentaire;
     }
 
@@ -118,6 +120,7 @@ public class Oeuvre {
     }
 
     public String getNote() {
+	calculerNote();
 	return note;
     }
 
