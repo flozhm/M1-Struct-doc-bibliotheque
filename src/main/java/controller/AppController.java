@@ -8,6 +8,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +35,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import model.MongoDBConnexion;
 import model.Oeuvre;
+import model.Utilisateur;
 
 public class AppController implements Initializable {
 
@@ -172,6 +178,8 @@ public class AppController implements Initializable {
 
     @FXML
     private TextArea commentaireArea;
+    
+    private Utilisateur user; //Permet de récupérer l'utilisateur lors de la connexion
 
     /**
      * Initialiser la vue
@@ -200,7 +208,7 @@ public class AppController implements Initializable {
 	InputStream is;
 	try {
 	    is = new FileInputStream(
-		    "C:\\Users\\charl\\git\\M1-Struct-doc-bibliotheque\\src\\main\\resources\\images\\etoile.png");
+		    ".\\src\\main\\resources\\images\\etoile.png");
 	    Image image = new Image(is);
 	    ImageView imageView1 = new ImageView(image);
 	    imageView1.setFitHeight(16);
@@ -231,16 +239,41 @@ public class AppController implements Initializable {
 
     @FXML
     void connexion() {
-	if (verifierLogin()) {
-	    accueil();
+    
+    //On vérifie si l'utilisateur existe dans la BDD
+	if (loginExiste(loginTextField.getText())) {
+		//Si le login existe
+		//On récupère l'utilisateur qui se connecte
+		
+ 	   Document query;
+ 	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
+        
+ 	   //On teste si le login existe déjà dans la BDD
+ 	    query = new Document("login", loginTextField.getText());
+ 	   collection.find(query).limit(5).forEach(element -> System.out.println(element));
+		accueil(); 
+	}else {
+		//On renvoie un message d'erreur via un label
+		// TODO
 	}
 	loginTextField.clear();
     }
+    
+    //Retourne true si l'utilisateur existe, false sinon
+    private boolean loginExiste(String login) {
 
-    private boolean verifierLogin() {
-	// TODO Auto-generated method stub
-	// TODO RECUPERER USER
-	return true;
+ 	   Document query;
+ 	   long count; //Compteur
+ 	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
+        
+ 	   //On teste si le login existe déjà dans la BDD
+ 	    query = new Document("login", login);
+        count = collection.countDocuments(query);
+
+        if (count == 0) {
+			return false; //S'il n'existe pas
+		}
+        return true; //S'il existe
     }
 
     @FXML
