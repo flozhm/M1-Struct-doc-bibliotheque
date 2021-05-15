@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.bson.Document;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -61,10 +64,18 @@ public class MongoDBConnexion {
 	return formationsUtilisateurs;
     }
 
-    public List<Utilisateur> getUtilisateurs() {
-	List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
-	// TODO
-	return utilisateurs;
+    //Permet de récupérer un utilisateur via son login
+    public Utilisateur getUtilisateur(String login) {
+
+  	   Document query;
+  	   Utilisateur user;
+  	   //On teste si le login existe déjà dans la BDD
+  	   query = new Document("login", login);
+  	   
+  	   //user=new Utilisateur(login,);
+  	   //String prenom, String universiteRattachement, List<FormationUtilisateur> formation, Role role
+  	   
+	return user;
     }
 
     public LocalDate getDateDerCommentaire(Oeuvre oeuvre) {

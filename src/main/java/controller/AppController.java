@@ -246,18 +246,14 @@ public class AppController implements Initializable {
     //On vérifie si l'utilisateur existe dans la BDD
 	if (loginExiste(loginTextField.getText())) {
 		//Si le login existe
-		//On récupère l'utilisateur qui se connecte
-		
- 	   Document query;
- 	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
-        
- 	   //On teste si le login existe déjà dans la BDD
- 	    query = new Document("login", loginTextField.getText());
- 	   collection.find(query).limit(5).forEach(element -> System.out.println(element));
+
+ 	   MongoDBConnexion mdb = new MongoDBConnexion();
+ 	   user = mdb.getUtilisateur(loginTextField.getText()); //On récupère l'utilisateur qui se connecte
+ 	  connexionLabel.setVisible(false);
 		accueil(); 
 	}else {
 		//On renvoie un message d'erreur via un label
-		// TODO
+		connexionLabel.setVisible(true);
 	}
 	loginTextField.clear();
     }
