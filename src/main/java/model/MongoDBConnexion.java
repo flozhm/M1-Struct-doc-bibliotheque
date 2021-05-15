@@ -26,13 +26,10 @@ public class MongoDBConnexion {
 
     public List<Oeuvre> getOeuvres() {
 	List<Oeuvre> oeuvres = new ArrayList<Oeuvre>();
-	database.getCollection("oeuvre").find().forEach(oeuvre -> {
-	    List<Auteur> auteurs = new ArrayList<Auteur>();
-	    // TODO Récupérer la liste des auteurs
-	    oeuvres.add(new Oeuvre((String) oeuvre.get("titre"), auteurs, (int) oeuvre.get("nbPage"),
-		    stringToLocalDate((String) oeuvre.get("datePublication")),
-		    stringToRole((String) oeuvre.get("role")), (String) oeuvre.get("contenu")));
-	});
+	database.getCollection("oeuvre").find().forEach(
+		oeuvre -> oeuvres.add(new Oeuvre(oeuvre.getString("titre"), oeuvre.getList("auteurs", Auteur.class),
+			oeuvre.getInteger("nbPage"), stringToLocalDate(oeuvre.getString("datePublication")),
+			stringToRole(oeuvre.getString("role")), oeuvre.getString("contenu"))));
 	return oeuvres;
     }
 
@@ -41,10 +38,9 @@ public class MongoDBConnexion {
 	BasicDBObject query = new BasicDBObject();
 	query.put("oeuvre", oeuvre.getTitre());
 	database.getCollection("commentaire").find(query)
-		.forEach(commentaire -> commentaires.add(new Commentaire((String) commentaire.get("oeuvre"),
-			(String) commentaire.get("login"),
-			stringToLocalDate((String) commentaire.get("datePublication")),
-			Double.parseDouble((String) commentaire.get("note")), (String) commentaire.get("texte"))));
+		.forEach(commentaire -> commentaires.add(new Commentaire(commentaire.getString("oeuvre"),
+			commentaire.getString("login"), stringToLocalDate(commentaire.getString("datePublication")),
+			commentaire.getDouble("note"), commentaire.getString("texte"))));
 	return commentaires;
     }
 
