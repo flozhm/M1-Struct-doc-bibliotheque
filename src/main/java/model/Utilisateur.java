@@ -7,12 +7,12 @@ public class Utilisateur {
 	private String login;
 	private String nom;
 	private String prenom;
-	private List<String> universiteRattachement;
+	private String universiteRattachement;
 	private List<FormationUtilisateur> formation;
 	private Role role;
 
 
-	public Utilisateur(String nom, String prenom, List<String> universiteRattachement,
+	public Utilisateur(String nom, String prenom, String universiteRattachement,
 			           List<FormationUtilisateur> formation, Role role) {
 		this.login = null;
 		this.nom = nom;
@@ -33,7 +33,7 @@ public class Utilisateur {
 		return prenom;
 	}
 
-	public List<String> getUniversiteRattachement() {
+	public String getUniversiteRattachement() {
 		return universiteRattachement;
 	}
 	public List<FormationUtilisateur> getFormation() {

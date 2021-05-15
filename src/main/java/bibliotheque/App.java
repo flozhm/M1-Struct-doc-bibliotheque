@@ -1,6 +1,7 @@
 package bibliotheque;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -9,9 +10,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.time.LocalDate;
+import model.Auteur;
 import model.Commentaire;
 import model.FormationUtilisateur;
 import model.MAJBase;
+import model.Oeuvre;
 import model.Role;
 import model.Utilisateur;
 
@@ -54,17 +58,22 @@ public class App extends Application {
     	
     	//Insertion commentaire test
     	//Commentaire com = new Commentaire("Oeuvre", "loginFZ58", "2011-03-16", 9.4, "blabla");
-        //MAJBase.insererCommentaireEnBase(com);
+        MAJBase.insererCommentaireEnBase(com);
+        
+        new LocalDate(0, 0, 0);
     	
     	//Insertion utilisateur test
-    	/*ArrayList<String> universiteRattachement = new ArrayList<String>();
-    	universiteRattachement.add("IDMC");
-    	universiteRattachement.add("DME");
-    	ArrayList<FormationUtilisateur> formation1 = new ArrayList<FormationUtilisateur>();
+    	/*ArrayList<FormationUtilisateur> formation1 = new ArrayList<FormationUtilisateur>();
     	formation1.add(new FormationUtilisateur("LicenceMIAGE",2016,2019));
     	formation1.add(new FormationUtilisateur("MasterMIAGE",2019,2021));
-    	Utilisateur user = new Utilisateur("Pierrat", "Charly", universiteRattachement, formation1, Role.Etudiant);
+    	Utilisateur user = new Utilisateur("Pierrat", "Charly", "IDMC", formation1, Role.Etudiant);
         MAJBase.insererUtilisateurEnBase(user);*/
+    	
+    	//Insertion oeuvre test
+    	/*ArrayList<Auteur> auteurs = new ArrayList<Auteur>();
+    	Oeuvre oeuvre = new Oeuvre("Oeuvre1", auteurs, int nbPage, LocalDate datePubli, String role, String contenu);
+    	
+    	insererOeuvreEnBase(oeuvre);*/
     	
     	//Insertion formation test
         

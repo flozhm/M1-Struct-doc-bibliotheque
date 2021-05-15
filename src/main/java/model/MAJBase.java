@@ -49,13 +49,6 @@ public class MAJBase {
     	   document.append("login", user.getNom().toLowerCase() + count);
 	   }
        
-       //On créé une liste de documents pour l' ou les universite(s)
-       List<Document> universitesRattachement = new ArrayList<Document>();
-       for (int i = 0; i < user.getUniversiteRattachement().size(); i++) {
-    	   universitesRattachement.add(
-                   new Document("universiteRattachement", user.getUniversiteRattachement().get(i))
-           );
-       }
        
      //On créé une liste de documents pour la ou les formation(s)
      List<Document> formations = new ArrayList<Document>();
@@ -70,8 +63,8 @@ public class MAJBase {
        
        document.append("nom", user.getNom() );
        document.append("prenom", user.getPrenom() );
-       document.append("universiteRattachement", universitesRattachement );
-       document.append("formation", formations);
+       document.append("universiteRattachement", user.getUniversiteRattachement() );
+       document.append("formations", formations);
        document.append("role", user.getRole().name() );
        
        //On ajoute le nouvel utilisateur dans la collection utilisateur
