@@ -69,7 +69,7 @@ public class App extends Application {
 	universites.add("IDMC");
 	universites.add("DME");
 	Formation formation = new Formation("MasterMIAGE", "B+5", 50, universites);
-	MAJBase.insererFormationEnBase(formation);*/
+	MAJBase.insererFormationEnBase(formation); */
     
         
 	//File[] fichiers = null;
