@@ -27,6 +27,11 @@
          <center>
             <VBox alignment="CENTER" maxWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
+                  <Label fx:id="connexionLabel" text="Ce login n'existe pas" textAlignment="CENTER" textFill="RED" visible="false">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                   <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-border-style: solid;" text="Identifiant :" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
