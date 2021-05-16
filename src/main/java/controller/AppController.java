@@ -8,11 +8,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
 import org.bson.Document;
-
 import com.mongodb.client.MongoCollection;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,7 +36,9 @@ import model.Utilisateur;
 
 public class AppController implements Initializable {
 
-    private List<Oeuvre> oeuvres;
+    private MongoDBConnexion mdb = new MongoDBConnexion();
+    private Utilisateur	     user;
+    private List<Oeuvre>     oeuvres;
 
     @FXML
     private StackPane stackPane;
@@ -181,15 +180,12 @@ public class AppController implements Initializable {
 
     @FXML
     private TextArea commentaireArea;
-    
-    private Utilisateur user; //Permet de récupérer l'utilisateur lors de la connexion
 
     /**
      * Initialiser la vue
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-	MongoDBConnexion mdb = new MongoDBConnexion();
 	oeuvres = mdb.getOeuvres();
 	ObservableList<Node> childs = stackPane.getChildren();
 	childs.forEach(node -> node.setVisible(false));
@@ -210,8 +206,7 @@ public class AppController implements Initializable {
 	contenuTextFlow.getChildren().add(textRemplissage);
 	InputStream is;
 	try {
-	    is = new FileInputStream(
-		    ".\\src\\main\\resources\\images\\etoile.png");
+	    is = new FileInputStream("./src/main/resources/images/etoile.png");
 	    Image image = new Image(is);
 	    ImageView imageView1 = new ImageView(image);
 	    imageView1.setFitHeight(16);
@@ -242,37 +237,20 @@ public class AppController implements Initializable {
 
     @FXML
     void connexion() {
-    
-    //On vérifie si l'utilisateur existe dans la BDD
-	if (loginExiste(loginTextField.getText())) {
-		//Si le login existe
-
- 	   MongoDBConnexion mdb = new MongoDBConnexion();
- 	   user = mdb.getUtilisateur(loginTextField.getText()); //On récupère l'utilisateur qui se connecte
- 	  connexionLabel.setVisible(false);
-		accueil(); 
-	}else {
-		//On renvoie un message d'erreur via un label
-		connexionLabel.setVisible(true);
+	if (!loginTextField.getText().isEmpty() && loginExiste(loginTextField.getText())) {
+	    user = mdb.getUtilisateur(loginTextField.getText()); // On récupère l'utilisateur qui se connecte
+	    connexionLabel.setVisible(false);
+	    accueil();
+	}
+	else {
+	    connexionLabel.setVisible(true);
 	}
 	loginTextField.clear();
     }
-    
-    //Retourne true si l'utilisateur existe, false sinon
+
     private boolean loginExiste(String login) {
-
- 	   Document query;
- 	   long count; //Compteur
- 	   MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
-        
- 	   //On teste si le login existe déjà dans la BDD
- 	    query = new Document("login", login);
-        count = collection.countDocuments(query);
-
-        if (count == 0) {
-			return false; //S'il n'existe pas
-		}
-        return true; //S'il existe
+	MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
+	return collection.countDocuments(new Document("login", login)) == 1;
     }
 
     @FXML
@@ -280,14 +258,14 @@ public class AppController implements Initializable {
 	tableNote.getItems().clear();
 	tableCommentaire.getItems().clear();
 	if (oeuvres != null && !oeuvres.isEmpty()) {
-	    // TODO FILTRER ROLE
-	    oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getNote).reversed()).collect(Collectors.toList())
+	    oeuvres.stream().filter(oeuvre -> oeuvre.getRole().equals(user.getRole()))
+		    .sorted(Comparator.comparing(Oeuvre::getNote).reversed()).collect(Collectors.toList())
 		    .forEach(oeuvre -> {
 			tableNote.getItems().add(oeuvre);
 		    });
-	    // TODO FILTRER ROLE
-	    oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getDateDerCommentaire).reversed())
-		    .collect(Collectors.toList()).forEach(oeuvre -> {
+	    oeuvres.stream().filter(oeuvre -> oeuvre.getRole().equals(user.getRole()))
+		    .sorted(Comparator.comparing(Oeuvre::getDateDerCommentaire).reversed()).collect(Collectors.toList())
+		    .forEach(oeuvre -> {
 			tableCommentaire.getItems().add(oeuvre);
 		    });
 	}
@@ -305,8 +283,8 @@ public class AppController implements Initializable {
     public void consultation() {
 	tableConsultation.getItems().clear();
 	if (oeuvres != null && !oeuvres.isEmpty()) {
-	    // TODO FILTRER ROLE
-	    oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getTitre)).collect(Collectors.toList())
+	    oeuvres.stream().filter(oeuvre -> oeuvre.getRole().equals(user.getRole()))
+		    .sorted(Comparator.comparing(Oeuvre::getTitre)).collect(Collectors.toList())
 		    .forEach(oeuvre -> tableConsultation.getItems().add(oeuvre));
 	}
 	ObservableList<Node> childs = stackPane.getChildren();
