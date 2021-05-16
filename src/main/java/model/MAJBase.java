@@ -19,7 +19,6 @@ public class MAJBase {
 	return null;
     }
 
-    // (Lors de l'insertion d'une oeuvre)
     // Insère un utilisateur en base
     public static void insererUtilisateurEnBase(Utilisateur user) {
 	Document document = new Document();
@@ -36,7 +35,6 @@ public class MAJBase {
 	System.out.println("Requête : " + count);
 	collection.find(query).limit(5).forEach(element -> System.out.println(element));
 
-	// On créé le document à insérer
 	// Si le login n'existe pas :
 	if (count == 0) {
 	    // On l'ajoute
@@ -62,13 +60,10 @@ public class MAJBase {
 
 	// On ajoute le nouvel utilisateur dans la collection utilisateur
 	collection.insertOne(document);
-
     }
 
     // Insère une oeuvre en base
     public static void insererOeuvreEnBase(Oeuvre oeuvre) {
-	// On teste si elle existe déjà dans la BDD (via titre)
-
 	Document document = new Document();
 	Document query;
 	long count;
@@ -78,13 +73,12 @@ public class MAJBase {
 	// Requête BDD qui liste tous les titres égaux à ceux de l'oeuvre en param
 	query = new Document("titre", oeuvre.getTitre());
 	count = collection.countDocuments(query);
+
 	System.out.println("Requête : " + count);
 	collection.find(query).limit(5).forEach(element -> System.out.println(element));
 
 	// Si l'oeuvre n'existe pas :
 	if (count == 0) {
-	    // On créé le document
-
 	    // On créé une liste de documents pour le ou les auteurs(s)
 	    List<Document> auteurs = new ArrayList<Document>();
 	    for (int i = 0; i < oeuvre.getAuteurs().size(); i++) {
@@ -104,30 +98,25 @@ public class MAJBase {
 	    // On ajoute la nouvelle oeuvre dans la collection oeuvre
 	    collection.insertOne(document);
 	}
-	// Si elle existe déjà on ne fait rien
     }
 
-    // (Lors de l'insertion d'une nouvelle oeuvre)
     // Insère une formation en base
     public static void insererFormationEnBase(Formation formation) {
-	// On teste s'il existe déjà dans la BDD (via nom)
-
 	Document document = new Document();
 	Document query;
-	long count; // Compteur
+	long count;
 	MongoCollection<Document> collection = mdb.getCollection("formation");
 
 	// On teste si elle existe déjà dans la BDD (via le nom)
 	// Requête BDD qui liste tous les noms égaux à ceux de la formation en param
 	query = new Document("nom", formation.getNom());
 	count = collection.countDocuments(query);
+
 	System.out.println("Requête : " + count);
 	collection.find(query).limit(5).forEach(element -> System.out.println(element));
 
 	// Si la formation n'existe pas :
 	if (count == 0) {
-	    // On créé le document
-
 	    // On créé une liste de documents pour le ou les universite(s)
 	    List<Document> universites = new ArrayList<Document>();
 	    for (int i = 0; i < formation.getUniversites().size(); i++) {
@@ -143,16 +132,13 @@ public class MAJBase {
 	    // On ajoute la nouvelle formation dans la collection formation
 	    collection.insertOne(document);
 	}
-	// Si elle existe déjà on ne fait rien
-
     }
 
-    // (Via l'application lorsqu'on est connecté)
     // Insère un commentaire en base
-    public static void insererCommentaireEnBase(Commentaire com) {
+    public static void insererCommentaireEnBase(Commentaire commentaire) {
 	Document document = new Document();
 	Document query;
-	long count; // Compteur
+	long count;
 	MongoCollection<Document> collection = mdb.getCollection("commentaire");
 
 	// On teste s'il existe déjà dans la BDD (via titreOeuvre + login +
@@ -162,34 +148,31 @@ public class MAJBase {
 
 	// db.commentaire.find({"oeuvre": com.getOeuvre(), "datePublication":
 	// com.getDatePublication(), "login": com.getLogin()})
-	query = new Document("oeuvre", com.getOeuvre())
-		.append("datePublication", MongoDBConnexion.localDatetoString(com.getDatePublication()))
-		.append("login", com.getLogin());
+	query = new Document("oeuvre", commentaire.getOeuvre())
+		.append("datePublication", MongoDBConnexion.localDatetoString(commentaire.getDatePublication()))
+		.append("login", commentaire.getLogin());
 	count = collection.countDocuments(query);
+
 	System.out.println("Requête : " + count);
 	collection.find(query).limit(5).forEach(element -> System.out.println(element));
 
 	// S'il n'existe pas :
 	if (count == 0) {
 	    // On créé le document à insérer
-	    document.append("oeuvre", com.getOeuvre());
-	    document.append("login", com.getLogin());
-	    document.append("datePublication", MongoDBConnexion.localDatetoString(com.getDatePublication()));
-	    document.append("note", com.getNote());
-	    document.append("texte", com.getTexte());
+	    document.append("oeuvre", commentaire.getOeuvre());
+	    document.append("login", commentaire.getLogin());
+	    document.append("datePublication", MongoDBConnexion.localDatetoString(commentaire.getDatePublication()));
+	    document.append("note", commentaire.getNote());
+	    document.append("texte", commentaire.getTexte());
 
 	    // On l'insère dans la collection commentaire
 	    collection.insertOne(document);
-
 	}
-	// S'il existe on ne fait rien
-
     }
 
     // Transforme un fichier en une oeuvre en analysant son contenu
     public static void lireFichier(File f) {
 	Oeuvre oeuvre = new Oeuvre();
-
 	try {
 	    // Créer l'objet File Reader
 	    FileReader fr = new FileReader(f);
@@ -197,13 +180,14 @@ public class MAJBase {
 	    BufferedReader br = new BufferedReader(fr);
 	    StringBuffer sb = new StringBuffer();
 	    String line;
-
 	    boolean isContenu = false;
+
 	    while (((line = br.readLine()) != null)) {
 		String[] lineTab = line.split(": ");
 		if (lineTab[0].equals("Titre")) {
 		    oeuvre.setTitre(lineTab[1]);
 		}
+
 		else if (lineTab[0].equals("Auteurs")) {
 		    if (lineTab[1].contains(",")) {
 			String[] auteurs;
@@ -218,32 +202,40 @@ public class MAJBase {
 			oeuvre.getAuteurs().add(lineTab[1]);
 		    }
 		}
+
 		else if (lineTab[0].equals("Pages")) {
 		    oeuvre.setNbPage(Integer.parseInt(lineTab[1]));
 
 		}
+
 		else if (lineTab[0].equals("Publication")) {
 		    oeuvre.setDatePubli(MongoDBConnexion.stringToLocalDate(lineTab[1]));
 
 		}
+
 		else if (lineTab[0].equals("Theme")) {
 		    oeuvre.setTheme(lineTab[1]);
 		}
+
 		else if (lineTab[0].equals("Roles")) {
 		    oeuvre.setRole(MongoDBConnexion.stringToRole(lineTab[1]));
 		}
+
 		else if (lineTab[0].equals("Formations")) {
+		    // TODO
 		    continue;
-
 		}
+
 		else if (lineTab[0].equals("Universites")) {
+		    // TODO
 		    continue;
-
 		}
+
 		else if (isContenu && !lineTab[0].equals("Contenu:")) {
 		    sb.append(line);
 		    sb.append("\n");
 		}
+
 		else {
 		    isContenu = true;
 		}
@@ -255,25 +247,22 @@ public class MAJBase {
 	    System.out.println(oeuvre.toString());
 	}
 	catch (IOException e) {
-	    // A voir ce que l'on fait ici
+	    // TODO
 	}
     }
 
-    // Déplacer fichier
-
-    // Vider base
     public static void viderBDD() {
 	// On vide chaque collection
-	mdb.getCollection("oeuvre").drop(); // Supprime la collection
-	mdb.createCollection("oeuvre"); // La crée
+	mdb.getCollection("oeuvre").drop();
+	mdb.createCollection("oeuvre");
 
-	mdb.getCollection("utilisateur").drop(); // Supprime la collection
-	new MongoDBConnexion().getDatabase().createCollection("utilisateur"); // La crée
+	mdb.getCollection("utilisateur").drop();
+	mdb.createCollection("utilisateur");
 
-	mdb.getCollection("formation").drop(); // Supprime la collection
-	new MongoDBConnexion().getDatabase().createCollection("formation"); // La crée
+	mdb.getCollection("formation").drop();
+	mdb.createCollection("formation");
 
-	mdb.getCollection("commentaire").drop(); // Supprime la collection
-	mdb.createCollection("commentaire"); // La crée
+	mdb.getCollection("commentaire").drop();
+	mdb.createCollection("commentaire");
     }
 }
