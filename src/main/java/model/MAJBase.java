@@ -23,7 +23,7 @@ public class MAJBase {
     public static void insererUtilisateurEnBase(Utilisateur user) {
 	Document document = new Document();
 	Document query;
-	long count; // Compteur
+	long count;
 	MongoCollection<Document> collection = mdb.getCollection("utilisateur");
 
 	// On teste s'il existe déjà dans la BDD (via nom)
