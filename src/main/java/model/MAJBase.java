@@ -38,34 +38,73 @@ public class MAJBase {
 
 		// S'il existe déjà
 		if (count > 0) {
+
+			// On met à jour l'université de rattachement
+			collection.updateOne(new Document("nom", user.getNom()).append("prenom", user.getPrenom()) // recherche
+					, new Document("$set", new Document("universiteRattachement", user.getUniversiteRattachement())) // update
+			);
+
 			// Vérification si les formations existent déjà pour cet utilisateur
-			List<Document> formations = new ArrayList<Document>();
+			List<FormationUtilisateur> formationsUtilisateurs = new ArrayList<FormationUtilisateur>();
+			List<Document> majFormation = new ArrayList<Document>();
+			// On récupère les formations associées à notre utilisateur en base
+			query = new Document("nom", user.getNom()).append("prenom", user.getPrenom());
+			Document utilisateur = collection.find(query).first();
+			// n récupère la liste des formations en base pour cet utilisateur
+			utilisateur.getList("formations", Document.class)
+					.forEach(formationUtilisateur -> formationsUtilisateurs.add(new FormationUtilisateur(
+							formationUtilisateur.getString("nom"), formationUtilisateur.getInteger("anneeEntree"),
+							formationUtilisateur.getInteger("anneeSortie"))));
+
+			boolean existe;
+			// On itère sur les formations de l'utilisateurs en base
 			for (int i = 0; i < user.getFormation().size(); i++) {
-				formations.add(new Document("nom", user.getFormation().get(i).getNom())
+				existe = false;
+				// On regarde si celles à insérer sont toutes en BDD pour cet utilisateur
+				for (int j = 0; j < formationsUtilisateurs.size() && !existe; j++) {
+					// Si elle n'existe pas on l'ajoute
+					if (user.getFormation().get(i).equals(formationsUtilisateurs.get(j))) {
+						existe = true;
+					}
+				}
+				// On ajoute la formation à l'utilisateur
+				if (!existe) {
+					formationsUtilisateurs.add(user.getFormation().get(i));
+				}
+			}
+			user.setFormation(formationsUtilisateurs);
+
+			// On transforme la liste de formations utilisateur en liste de documents
+			for (int i = 0; i < user.getFormation().size(); i++) {
+				majFormation.add(new Document("nom", user.getFormation().get(i).getNom())
 						.append("anneeEntree", user.getFormation().get(i).getAnneeEntree())
 						.append("anneeSortie", user.getFormation().get(i).getAnneeSortie()));
 			}
-
-			// On met à jour sinon
+			// On MAJ les formations de l'utilisateur
+			collection.updateOne(new Document("nom", user.getNom()).append("prenom", user.getPrenom()) // filtre
+					, new Document("$set", new Document("formations", majFormation)) // update
+			);
 
 		} else {
-			// S'il n'existe pas dans la BDD, on compte le nombre d'utilisateurs qui ont le
-			// même nom
-			// Requête BDD qui liste tous les utilisateurs via leur nom
-			// db.utilisateur.find({"nom": com.getNom()})
-			query = new Document("nom", user.getNom());
+			// S'il n'existe pas dans la BDD, on itère sur les login
+			query = new Document("login", user.getNom().toLowerCase() + user.getPrenom().toLowerCase().substring(0, 1));
 			count = collection.countDocuments(query);
-			System.out.println("Requête : " + count);
-			collection.find(query).limit(5).forEach(element -> System.out.println(element));
-
-			// Si le login n'existe pas :
-			if (count == 0) {
-				// On l'ajoute
-				document.append("login", user.getNom().toLowerCase());
-			} else {
-				// S'il existe déjà on ajoute un numéro correspondant au n-ème login
-				document.append("login", user.getNom().toLowerCase() + count);
+			int cpt = 0;
+			boolean numero = false;
+			while (count == 1) {
+				cpt++;
+				query = new Document("login",
+						user.getNom().toLowerCase() + user.getPrenom().toLowerCase().substring(0, 1) + cpt);
+				count = collection.countDocuments(query);
+				numero = true;
 			}
+			if (numero == true) {
+				document.append("login",
+						user.getNom().toLowerCase() + user.getPrenom().toLowerCase().substring(0, 1) + cpt);
+			} else {
+				document.append("login", user.getNom().toLowerCase() + user.getPrenom().toLowerCase().substring(0, 1));
+			}
+
 			// On créé une liste de documents pour la ou les formation(s)
 			List<Document> formations = new ArrayList<Document>();
 			for (int i = 0; i < user.getFormation().size(); i++) {
@@ -97,9 +136,6 @@ public class MAJBase {
 		// Requête BDD qui liste tous les titres égaux à ceux de l'oeuvre en param
 		query = new Document("titre", oeuvre.getTitre());
 		count = collection.countDocuments(query);
-
-		System.out.println("Requête : " + count);
-		collection.find(query).limit(5).forEach(element -> System.out.println(element));
 
 		// Si l'oeuvre n'existe pas :
 		if (count == 0) {
@@ -135,9 +171,6 @@ public class MAJBase {
 		// Requête BDD qui liste tous les noms égaux à ceux de la formation en param
 		query = new Document("nom", formation.getNom());
 		count = collection.countDocuments(query);
-
-		System.out.println("Requête : " + count);
-		collection.find(query).limit(5).forEach(element -> System.out.println(element));
 
 		// Si la formation n'existe pas :
 		if (count == 0) {
@@ -176,9 +209,6 @@ public class MAJBase {
 				.append("datePublication", MongoDBConnexion.localDatetoString(commentaire.getDatePublication()))
 				.append("login", commentaire.getLogin());
 		count = collection.countDocuments(query);
-
-		System.out.println("Requête : " + count);
-		collection.find(query).limit(5).forEach(element -> System.out.println(element));
 
 		// S'il n'existe pas :
 		if (count == 0) {
@@ -269,20 +299,16 @@ public class MAJBase {
 			}
 
 			fr.close();
-			// System.out.println("Contenu du contenu: ");
-			// System.out.println(sb.toString());
 			oeuvre.setContenu(sb.toString());
-			System.out.println(oeuvre.toString());
-			System.out.println();
 			for (int i = 0; i < utilisateurs.size(); i++) {
 				utilisateurs.get(i).setUniversiteRattachement(universiteRattachement);
 				utilisateurs.get(i).setFormation(formationsUser);
 				utilisateurs.get(i).setRole(oeuvre.getRole());
-				// insererUtilisateurEnBase(utilisateurs.get(i));
+				insererUtilisateurEnBase(utilisateurs.get(i));
 			}
 			for (int i = 0; i < formations.size(); i++) {
 				formations.get(i).getUniversites().add(universiteRattachement);
-				// insererFormationEnBase(formations.get(i));
+				insererFormationEnBase(formations.get(i));
 			}
 
 			insererOeuvreEnBase(oeuvre);

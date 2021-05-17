@@ -2,7 +2,6 @@ package bibliotheque;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -11,11 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Auteur;
-import model.Commentaire;
 import model.FormationUtilisateur;
 import model.MAJBase;
-import model.Oeuvre;
 import model.Role;
 import model.Utilisateur;
 
@@ -49,8 +45,15 @@ public class App extends Application {
 		ArrayList<FormationUtilisateur> formation1 = new ArrayList<FormationUtilisateur>();
 		formation1.add(new FormationUtilisateur("LicenceMIAGE", 2016, 2019));
 		formation1.add(new FormationUtilisateur("MasterMIAGE", 2019, 2021));
-		Utilisateur user = new Utilisateur("pi", "Charly", "IDMC", formation1, Role.Etudiant);
+		Utilisateur user = new Utilisateur("Mcdonnell", "Charly", "IDMC", formation1, Role.Etudiant);
 		MAJBase.insererUtilisateurEnBase(user);
+
+		Utilisateur user2 = new Utilisateur("Mcdonnell", "Charlie", "IDMC", formation1, Role.Etudiant);
+		MAJBase.insererUtilisateurEnBase(user2);
+
+		formation1.add(new FormationUtilisateur("Mzzeezez", 2019, 2021));
+		Utilisateur user3 = new Utilisateur("Mcdonnell", "Charlie", "IDMC2", formation1, Role.Etudiant);
+		MAJBase.insererUtilisateurEnBase(user3);
 
 		/*
 		 * BasicDBObject query = new BasicDBObject(); MongoDBConnexion mdb = new
@@ -60,18 +63,21 @@ public class App extends Application {
 		 */
 
 		// Insertion oeuvre test
-		ArrayList<Auteur> auteurs = new ArrayList<Auteur>();
-		Oeuvre oeuvre = new Oeuvre("Oeuvre1", auteurs, 50, LocalDate.of(2011, 3, 16), Role.Etudiant, "Poisson",
-				"blablabla");
-		MAJBase.insererOeuvreEnBase(oeuvre);
-
-		Oeuvre oeuvre2 = new Oeuvre("Oeuvre2", auteurs, 50, LocalDate.of(2011, 3, 16), Role.Etudiant, "Poisson",
-				"blablabla");
-		MAJBase.insererOeuvreEnBase(oeuvre2);
+		/*
+		 * ArrayList<Auteur> auteurs = new ArrayList<Auteur>(); Oeuvre oeuvre = new
+		 * Oeuvre("Oeuvre1", auteurs, 50, LocalDate.of(2011, 3, 16), Role.Etudiant,
+		 * "Poisson", "blablabla"); MAJBase.insererOeuvreEnBase(oeuvre);
+		 * 
+		 * Oeuvre oeuvre2 = new Oeuvre("Oeuvre2", auteurs, 50, LocalDate.of(2011, 3,
+		 * 16), Role.Etudiant, "Poisson", "blablabla");
+		 * MAJBase.insererOeuvreEnBase(oeuvre2);
+		 */
 
 		// Insertion commentaire test
-		Commentaire com = new Commentaire("Oeuvre1", "zahm", LocalDate.of(2011, 3, 16), 9.4, "blabla"); // YYYY-MM-DD
-		MAJBase.insererCommentaireEnBase(com);
+		/*
+		 * Commentaire com = new Commentaire("Oeuvre1", "zahm", LocalDate.of(2011, 3,
+		 * 16), 9.4, "blabla"); // YYYY-MM-DD MAJBase.insererCommentaireEnBase(com);
+		 */
 
 		// Insertion formation test
 		/*
@@ -86,7 +92,7 @@ public class App extends Application {
 
 		for (int i = 0; i < fichiers.length; i++) {
 			MAJBase.lireFichier(fichiers[i]);
-			String fileName = fichiers[i].getName();
+			System.out.println(fichiers[i].getName());
 		}
 
 		launch(); // On lance l'application*/
