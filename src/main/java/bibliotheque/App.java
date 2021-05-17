@@ -3,15 +3,13 @@ package bibliotheque;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
-import org.bson.Document;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Commentaire;
 import model.MAJBase;
-import model.MongoDBConnexion;
 
 /**
  * JavaFX App
@@ -35,28 +33,28 @@ public class App extends Application {
 		}
 	}
 
-    public static void main(String[] args) {
-    
-    	File[] fichiers = null;
-    	
+	public static void main(String[] args) {
+
+		File[] fichiers = null;
 
 		// MAJBase.viderBDD();// On vide la BDD
 		fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
-    	
-    	MAJBase.viderBDD();//On vide la BDD 
-    	//fichiers = MAJBase.recupFichiers(); //On récupère les fichiers
-    	Document document = new Document();
-    	Commentaire com = new Commentaire("loginFZ", "2011-03-16", 9.4, "blabla");
-        document.append("login", com.getLogin() );
-        document.append("datePublication", com.getDatePublication());
-        document.append("note", com.getNote());
-        document.append("texte", com.getTexte());
-        
-        new MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
-        
-    	//MAJBase.insererCommentaireEnBase(com);
-    
-        for (int i = 0; i < fichiers.length; i++) { // On boucle sur les fichiers du répertoire
+
+		MAJBase.viderBDD();// On vide la BDD
+		// fichiers = MAJBase.recupFichiers(); //On récupère les fichiers
+		// Document document = new Document();
+		// Commentaire com = new Commentaire("loginFZ", "2011-03-16", 9.4, "blabla");
+		// document.append("login", com.getLogin());
+		// document.append("datePublication", com.getDatePublication());
+		// document.append("note", com.getNote());
+		// document.append("texte", com.getTexte());
+
+		// new
+		// MongoDBConnexion().getDatabase().getCollection("commentaire").insertOne(document);
+
+		// MAJBase.insererCommentaireEnBase(com);
+
+		for (int i = 0; i < fichiers.length; i++) { // On boucle sur les fichiers du répertoire
 			MAJBase.lireFichier(fichiers[i]);
 
 			// String fileName = fichiers[i].getName(); // On récupère le nom du fichier
@@ -64,8 +62,7 @@ public class App extends Application {
 			// fichiers un par un dans la BDD
 		}
 
+		launch(); // On lance l'application*/
 
-    	launch(); // On lance l'application*/
-    
-    }
+	}
 }
