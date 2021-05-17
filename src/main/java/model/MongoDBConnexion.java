@@ -27,10 +27,14 @@ public class MongoDBConnexion {
 
     public List<Oeuvre> getOeuvres() {
 	List<Oeuvre> oeuvres = new ArrayList<Oeuvre>();
-	database.getCollection("oeuvre").find().forEach(
-		oeuvre -> oeuvres.add(new Oeuvre(oeuvre.getString("titre"), oeuvre.getList("auteurs", Auteur.class),
-			oeuvre.getInteger("nbPage"), stringToLocalDate(oeuvre.getString("datePublication")),
-			stringToRole(oeuvre.getString("role")), oeuvre.getString("contenu"))));
+	database.getCollection("oeuvre").find().forEach(oeuvre -> {
+	    List<Auteur> auteurs = new ArrayList<Auteur>();
+	    oeuvre.getList("auteurs", Document.class)
+		    .forEach(auteur -> auteurs.add(new Auteur(auteur.getString("nom"), auteur.getString("prenom"))));
+	    oeuvres.add(new Oeuvre(oeuvre.getString("titre"), auteurs, oeuvre.getInteger("nbPage"),
+		    stringToLocalDate(oeuvre.getString("datePublication")), stringToRole(oeuvre.getString("role")),
+		    oeuvre.getString("contenu")));
+	});
 	return oeuvres;
     }
 
@@ -66,6 +70,11 @@ public class MongoDBConnexion {
 	BasicDBObject query = new BasicDBObject();
 	query.put("login", login);
 	Document utilisateur = database.getCollection("utilisateur").find(query).first();
+	List<FormationUtilisateur> formationsUtilisateurs = new ArrayList<FormationUtilisateur>();
+	utilisateur.getList("formations", Document.class)
+		.forEach(formationUtilisateur -> formationsUtilisateurs.add(new FormationUtilisateur(
+			formationUtilisateur.getString("nom"), formationUtilisateur.getInteger("anneeEntree"),
+			formationUtilisateur.getInteger("anneeSortie"))));
 	return new Utilisateur(utilisateur.getString("nom"), utilisateur.getString("prenom"),
 		utilisateur.getString("universiteRattachement"),
 		utilisateur.getList("formations", FormationUtilisateur.class),

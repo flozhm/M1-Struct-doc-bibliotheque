@@ -67,6 +67,7 @@ public class App extends Application {
 
 	 System.out.println(utilisateur.getList("formations", Document.class));
 
+
 	/* Insertion oeuvre test
 	 * ArrayList<Auteur> auteurs = new ArrayList<Auteur>();
 	 * Oeuvre oeuvre = new Oeuvre("Oeuvre1", auteurs, 50, LocalDate.of(2011, 3, 16), String role, String contenu);

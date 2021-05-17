@@ -187,84 +187,75 @@ public class MAJBase {
 
     // Transforme un fichier en une oeuvre en analysant son contenu
     public static void lireFichier(File f) {
-	Oeuvre oeuvre = new Oeuvre();
-	try {
-	    // Créer l'objet File Reader
-	    FileReader fr = new FileReader(f);
-	    // Créer l'objet BufferedReader
-	    BufferedReader br = new BufferedReader(fr);
-	    StringBuffer sb = new StringBuffer();
-	    String line;
-	    boolean isContenu = false;
+		Oeuvre oeuvre = new Oeuvre();
 
-	    while (((line = br.readLine()) != null)) {
-		String[] lineTab = line.split(": ");
-		if (lineTab[0].equals("Titre")) {
-		    oeuvre.setTitre(lineTab[1]);
-		}
+		try {
+			// Créer l'objet File Reader
+			FileReader fr = new FileReader(f);
+			// Créer l'objet BufferedReader
+			BufferedReader br = new BufferedReader(fr);
+			StringBuffer sb = new StringBuffer();
+			String line;
 
-		else if (lineTab[0].equals("Auteurs")) {
-		    if (lineTab[1].contains(",")) {
-			String[] auteurs;
-			auteurs = lineTab[1].split(", ");
-			for (int i = 0; i < auteurs.length; i++) {
-			    // TODO Transformer string en auteur
-			    oeuvre.getAuteurs().add(auteurs[i]);
+			boolean isContenu = false;
+			while (((line = br.readLine()) != null)) {
+
+				if (line.split(": ")[0].equals("Titre")) {
+					oeuvre.setTitre(line.split(": ")[1]);
+				} else if (line.split(": ")[0].equals("Auteurs")) {
+					if (line.split(": ")[1].contains(",")) {
+						String[] auteurs;
+						auteurs = line.split(": ")[1].split(", ");
+						for (int i = 0; i < auteurs.length; i++) {
+							oeuvre.getAuteurs().add(new Auteur(auteurs[i].split(" ")[1], auteurs[i].split(" ")[0]));
+
+						}
+					} else {
+						oeuvre.getAuteurs()
+								.add(new Auteur(line.split(": ")[1].split(" ")[1], line.split(": ")[1].split(" ")[0]));
+					}
+
+				} else if (line.split(": ")[0].equals("Pages")) {
+					oeuvre.setNbPage(Integer.parseInt(line.split(": ")[1]));
+
+				} else if (line.split(": ")[0].equals("Publication")) {
+					oeuvre.setDatePubli(line.split(": ")[1]);
+
+				} else if (line.split(": ")[0].equals("Theme")) {
+					oeuvre.setTheme(line.split(": ")[1]);
+				} else if (line.split(": ")[0].equals("Roles")) {
+					oeuvre.setRole(line.split(": ")[1]);
+				} else if (line.split(": ")[0].equals("Formations")) {
+					continue;
+
+				} else if (line.split(": ")[0].equals("Universites")) {
+					continue;
+
+				} else if (isContenu && !line.split(": ")[0].equals("Contenu:")) {
+					sb.append(line);
+					sb.append("\n");
+
+				} else {
+
+					isContenu = true;
+
+				}
+
 			}
-		    }
-		    else {
-			// TODO Transformer string en auteur
-			oeuvre.getAuteurs().add(lineTab[1]);
-		    }
+
+			fr.close();
+			// System.out.println("Contenu du contenu: ");
+			// System.out.println(sb.toString());
+			oeuvre.setContenu(sb.toString());
+			System.out.println(oeuvre.toString());
+			insererOeuvreEnBase(oeuvre);
+
+		} catch (
+
+		IOException e) {
+			// A voir ce que l'on fait ici
 		}
-
-		else if (lineTab[0].equals("Pages")) {
-		    oeuvre.setNbPage(Integer.parseInt(lineTab[1]));
-
-		}
-
-		else if (lineTab[0].equals("Publication")) {
-		    oeuvre.setDatePubli(MongoDBConnexion.stringToLocalDate(lineTab[1]));
-
-		}
-
-		else if (lineTab[0].equals("Theme")) {
-		    oeuvre.setTheme(lineTab[1]);
-		}
-
-		else if (lineTab[0].equals("Roles")) {
-		    oeuvre.setRole(MongoDBConnexion.stringToRole(lineTab[1]));
-		}
-
-		else if (lineTab[0].equals("Formations")) {
-		    // TODO
-		    continue;
-		}
-
-		else if (lineTab[0].equals("Universites")) {
-		    // TODO
-		    continue;
-		}
-
-		else if (isContenu && !lineTab[0].equals("Contenu:")) {
-		    sb.append(line);
-		    sb.append("\n");
-		}
-
-		else {
-		    isContenu = true;
-		}
-	    }
-	    fr.close();
-	    // System.out.println("Contenu du contenu: ");
-	    // System.out.println(sb.toString());
-	    oeuvre.setContenu(sb.toString());
-	    System.out.println(oeuvre.toString());
 	}
-	catch (IOException e) {
-	    // TODO
-	}
-    }
 
     public static void viderBDD() {
 	// On vide chaque collection
