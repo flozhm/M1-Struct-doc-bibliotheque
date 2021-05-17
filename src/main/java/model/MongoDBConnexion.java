@@ -76,8 +76,7 @@ public class MongoDBConnexion {
 			formationUtilisateur.getString("nom"), formationUtilisateur.getInteger("anneeEntree"),
 			formationUtilisateur.getInteger("anneeSortie"))));
 	return new Utilisateur(utilisateur.getString("nom"), utilisateur.getString("prenom"),
-		utilisateur.getString("universiteRattachement"),
-		utilisateur.getList("formations", FormationUtilisateur.class),
+		utilisateur.getString("universiteRattachement"), formationsUtilisateurs,
 		stringToRole(utilisateur.getString("role")));
     }
 
