@@ -110,7 +110,7 @@
          <top>
             <HBox alignment="CENTER" prefHeight="36.0" spacing="12.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="consultation" mnemonicParsing="false" onAction="#consultation" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Consulter la liste des oeuvres" />
+                  <Button fx:id="consultation" mnemonicParsing="false" onAction="#consultation" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Accueil" />
                   <Button fx:id="deconnexion1" mnemonicParsing="false" onAction="#deconnexion" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Déconnexion" />
                </children>
             </HBox>
@@ -160,7 +160,7 @@
          <top>
             <HBox alignment="CENTER" prefHeight="36.0" spacing="12.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="accueil" mnemonicParsing="false" onAction="#accueil" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Accueil" />
+                  <Button fx:id="accueil" mnemonicParsing="false" onAction="#accueil" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Informations" />
                   <Button fx:id="deconnexion2" mnemonicParsing="false" onAction="#deconnexion" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Déconnexion" />
                </children>
             </HBox>
@@ -232,8 +232,8 @@
          <top>
             <HBox alignment="CENTER" prefHeight="36.0" spacing="12.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="accueil2" mnemonicParsing="false" onAction="#accueil" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Accueil" />
-                  <Button fx:id="consultation2" mnemonicParsing="false" onAction="#consultation" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Consulter la liste des oeuvres" />
+                  <Button fx:id="accueil2" mnemonicParsing="false" onAction="#accueil" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Informations" />
+                  <Button fx:id="consultation2" mnemonicParsing="false" onAction="#consultation" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Accueil" />
                   <Button fx:id="deconnexion3" mnemonicParsing="false" onAction="#deconnexion" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Déconnexion" />
                </children>
                <BorderPane.margin>
@@ -252,8 +252,8 @@
          <top>
             <HBox alignment="CENTER" prefHeight="36.0" spacing="12.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="accueil3" mnemonicParsing="false" onAction="#accueil" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Accueil" />
-                  <Button fx:id="consultation3" mnemonicParsing="false" onAction="#consultation" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Consulter la liste des oeuvres" />
+                  <Button fx:id="accueil3" mnemonicParsing="false" onAction="#accueil" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Informations" />
+                  <Button fx:id="consultation3" mnemonicParsing="false" onAction="#consultation" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Accueil" />
                   <Button fx:id="deconnexion4" mnemonicParsing="false" onAction="#deconnexion" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Déconnexion" />
                </children>
             </HBox>
