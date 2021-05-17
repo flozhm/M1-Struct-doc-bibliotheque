@@ -106,6 +106,9 @@ public class AppController implements Initializable {
     private TableColumn<Oeuvre, String> tableConsultationDate;
 
     @FXML
+    private TableColumn<Oeuvre, String> tableConsultationNote;
+
+    @FXML
     private Button accueil;
 
     @FXML
@@ -190,9 +193,6 @@ public class AppController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 	oeuvres = mdb.getOeuvres();
 	changePane(connexionPane);
-	tableNote.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-	tableCommentaire.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-	tableConsultation.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	tableNoteOeuvre.setCellValueFactory(new PropertyValueFactory<>("titre"));
 	tableNoteNote.setCellValueFactory(new PropertyValueFactory<>("note"));
 	tableCommentaireOeuvre.setCellValueFactory(new PropertyValueFactory<>("titre"));
@@ -201,6 +201,10 @@ public class AppController implements Initializable {
 	tableConsultationTheme.setCellValueFactory(new PropertyValueFactory<>("theme"));
 	tableConsultationPages.setCellValueFactory(new PropertyValueFactory<>("nbPage"));
 	tableConsultationDate.setCellValueFactory(new PropertyValueFactory<>("datePubli"));
+	tableConsultationNote.setCellValueFactory(new PropertyValueFactory<>("note"));
+	tableNote.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+	tableCommentaire.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+	tableConsultation.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	contenuTextFlow.setPrefWidth(scrollPane.getWidth());
 	InputStream is;
 	try {
@@ -234,7 +238,6 @@ public class AppController implements Initializable {
 	textRemplissage.setText(
 		"Lorem Ipsum is simply dummy teximply dummy text of the printing and typesetting industry.  dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lo");
 	contenuTextFlow.getChildren().add(textRemplissage);
-
     }
 
     @FXML
@@ -252,25 +255,36 @@ public class AppController implements Initializable {
 
     private boolean loginExiste(String login) {
 	MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
-	System.out.println(collection.countDocuments(new Document("login", login)));
 	return collection.countDocuments(new Document("login", login)) > 0;
     }
 
     @FXML
     public void accueil() {
-	tableNote.getItems().clear();
-	tableCommentaire.getItems().clear();
-	if (oeuvres != null && !oeuvres.isEmpty()) {
-	    oeuvres.stream().filter(oeuvre -> oeuvre.getRole().equals(user.getRole()))
-		    .sorted(Comparator.comparing(Oeuvre::getNote).reversed()).collect(Collectors.toList())
-		    .forEach(oeuvre -> {
-			tableNote.getItems().add(oeuvre);
-		    });
-	    oeuvres.stream().filter(oeuvre -> oeuvre.getRole().equals(user.getRole()))
-		    .sorted(Comparator.comparing(Oeuvre::getDateDerCommentaire).reversed()).collect(Collectors.toList())
-		    .forEach(oeuvre -> {
-			tableCommentaire.getItems().add(oeuvre);
-		    });
+	try {
+	    tableNote.getItems().clear();
+	    tableCommentaire.getItems().clear();
+	    if (oeuvres != null && !oeuvres.isEmpty()) {
+
+		oeuvres.stream().filter(oeuvre -> oeuvre.getRole().equals(user.getRole()))
+			.sorted(Comparator.comparing(Oeuvre::getNote).reversed()).collect(Collectors.toList())
+			.forEach(oeuvre -> {
+			    tableNote.getItems().add(oeuvre);
+			});
+
+		oeuvres.stream().filter(oeuvre -> oeuvre.getDateDerCommentaire() != null)
+			.filter(oeuvre -> oeuvre.getRole().equals(user.getRole()))
+			.sorted(Comparator.comparing(Oeuvre::getDateDerCommentaire).reversed())
+			.collect(Collectors.toList()).forEach(oeuvre -> {
+
+			    if (oeuvre.getDateDerCommentaire() != null) {
+				tableCommentaire.getItems().add(oeuvre);
+			    }
+
+			});
+	    }
+	}
+	catch (Exception e) {
+	    // TODO: handle exception
 	}
 	changePane(accueilPane);
     }
