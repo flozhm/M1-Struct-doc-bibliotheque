@@ -86,7 +86,7 @@
                         <Insets />
                      </GridPane.margin>
                   </HBox>
-                  <TableView fx:id="tableNote" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                  <TableView fx:id="tableNote" onMouseClicked="#selectionnerOeuvreTN" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                     <columns>
                       <TableColumn fx:id="tableNoteOeuvre" editable="false" prefWidth="75.0" sortable="false" text="Oeuvre" />
                       <TableColumn fx:id="tableNoteNote" editable="false" prefWidth="75.0" sortType="DESCENDING" sortable="false" text="Note" />
@@ -95,7 +95,7 @@
                        <Insets bottom="6.0" left="12.0" right="6.0" top="6.0" />
                      </GridPane.margin>
                   </TableView>
-                  <TableView fx:id="tableCommentaire" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TableView fx:id="tableCommentaire" onMouseClicked="#selectionnerOeuvreTC" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columns>
                       <TableColumn fx:id="tableCommentaireOeuvre" editable="false" prefWidth="75.0" sortable="false" text="Oeuvre" />
                       <TableColumn fx:id="tableCommentaireDate" editable="false" prefWidth="75.0" sortType="DESCENDING" sortable="false" text="Date dernier commentaire" />
@@ -145,7 +145,7 @@
                         <Label alignment="CENTER" contentDisplay="CENTER" text="Tableau de consultation des oeuvres" textAlignment="CENTER" />
                      </children>
                   </HBox>
-                  <TableView fx:id="tableConsultation" GridPane.rowIndex="1">
+                  <TableView fx:id="tableConsultation" onMouseClicked="#selectionnerOeuvreTCons" GridPane.rowIndex="1">
                     <columns>
                       <TableColumn fx:id="tableConsultationTitre" editable="false" prefWidth="75.0" text="Titre" />
                       <TableColumn fx:id="tableConsultationTheme" editable="false" prefWidth="75.0" text="Thème" />
@@ -190,6 +190,7 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Label>
+                        <VBox fx:id="commentairesBox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="12.0" VBox.vgrow="ALWAYS" />
                      </children>
                      <padding>
                         <Insets bottom="12.0" top="12.0" />
@@ -205,12 +206,13 @@
             </ScrollPane>
          </center>
          <left>
-            <VBox fx:id="auteursBox" alignment="TOP_CENTER" prefWidth="124.0" spacing="6.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" spacing="6.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Auteurs :">
+                  <Label text="Auteurs">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
+                  <VBox fx:id="auteursBox" alignment="TOP_CENTER" spacing="6.0" VBox.vgrow="ALWAYS" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="12.0" left="12.0" top="12.0" />

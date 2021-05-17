@@ -2,7 +2,6 @@ package bibliotheque;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
@@ -10,10 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.FormationUtilisateur;
 import model.MAJBase;
-import model.Role;
-import model.Utilisateur;
 
 /**
  * JavaFX App
@@ -42,18 +38,21 @@ public class App extends Application {
 		MAJBase.viderBDD();// On vide la BDD
 
 		// Insertion utilisateur test
-		ArrayList<FormationUtilisateur> formation1 = new ArrayList<FormationUtilisateur>();
-		formation1.add(new FormationUtilisateur("LicenceMIAGE", 2016, 2019));
-		formation1.add(new FormationUtilisateur("MasterMIAGE", 2019, 2021));
-		Utilisateur user = new Utilisateur("Mcdonnell", "Charly", "IDMC", formation1, Role.Etudiant);
-		MAJBase.insererUtilisateurEnBase(user);
-
-		Utilisateur user2 = new Utilisateur("Mcdonnell", "Charlie", "IDMC", formation1, Role.Etudiant);
-		MAJBase.insererUtilisateurEnBase(user2);
-
-		formation1.add(new FormationUtilisateur("Mzzeezez", 2019, 2021));
-		Utilisateur user3 = new Utilisateur("Mcdonnell", "Charlie", "IDMC2", formation1, Role.Etudiant);
-		MAJBase.insererUtilisateurEnBase(user3);
+		/*
+		 * ArrayList<FormationUtilisateur> formation1 = new
+		 * ArrayList<FormationUtilisateur>(); formation1.add(new
+		 * FormationUtilisateur("LicenceMIAGE", 2016, 2019)); formation1.add(new
+		 * FormationUtilisateur("MasterMIAGE", 2019, 2021)); Utilisateur user = new
+		 * Utilisateur("Mcdonnell", "Charly", "IDMC", formation1, Role.Etudiant);
+		 * MAJBase.insererUtilisateurEnBase(user);
+		 * 
+		 * Utilisateur user2 = new Utilisateur("Mcdonnell", "Charlie", "IDMC",
+		 * formation1, Role.Etudiant); MAJBase.insererUtilisateurEnBase(user2);
+		 * 
+		 * formation1.add(new FormationUtilisateur("Mzzeezez", 2019, 2021)); Utilisateur
+		 * user3 = new Utilisateur("Mcdonnell", "Charlie", "IDMC2", formation1,
+		 * Role.Etudiant); MAJBase.insererUtilisateurEnBase(user3);
+		 */
 
 		/*
 		 * BasicDBObject query = new BasicDBObject(); MongoDBConnexion mdb = new
@@ -98,4 +97,5 @@ public class App extends Application {
 		launch(); // On lance l'application*/
 
 	}
+
 }
