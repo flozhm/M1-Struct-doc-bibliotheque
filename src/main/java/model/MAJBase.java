@@ -16,7 +16,6 @@ public class MAJBase {
 
 	private static MongoDatabase mdb = new MongoDBConnexion().getDatabase();
 
-
 	// Permet de récupérer
 	public static File[] recupFichiers() {
 
@@ -36,47 +35,55 @@ public class MAJBase {
 		// On teste s'il existe déjà dans la BDD (via nom+prenom)
 		query = new Document("nom", user.getNom()).append("prenom", user.getPrenom());
 		count = collection.countDocuments(query);
-		System.out.println("Requête : " + count);
-		collection.find(query).limit(5).forEach(element -> System.out.println(element));
+
 		// S'il existe déjà
 		if (count > 0) {
 			// Vérification si les formations existent déjà pour cet utilisateur
+			List<Document> formations = new ArrayList<Document>();
+			for (int i = 0; i < user.getFormation().size(); i++) {
+				formations.add(new Document("nom", user.getFormation().get(i).getNom())
+						.append("anneeEntree", user.getFormation().get(i).getAnneeEntree())
+						.append("anneeSortie", user.getFormation().get(i).getAnneeSortie()));
+			}
 
-		}
+			// On met à jour sinon
 
-		// On teste s'il existe déjà dans la BDD (via nom)
-		// Requête BDD qui liste tous les utilisateurs via leur nom
-
-		// db.utilisateur.find({"nom": com.getNom()})
-		query = new Document("nom", user.getNom());
-		count = collection.countDocuments(query);
-		System.out.println("Requête : " + count);
-		collection.find(query).limit(5).forEach(element -> System.out.println(element));
-
-		// Si le login n'existe pas :
-		if (count == 0) {
-			// On l'ajoute
-			document.append("login", user.getNom().toLowerCase());
 		} else {
-			// S'il existe déjà on ajoute un numéro correspondant au n-ème login
-			document.append("login", user.getNom().toLowerCase() + count);
+			// S'il n'existe pas dans la BDD, on compte le nombre d'utilisateurs qui ont le
+			// même nom
+			// Requête BDD qui liste tous les utilisateurs via leur nom
+			// db.utilisateur.find({"nom": com.getNom()})
+			query = new Document("nom", user.getNom());
+			count = collection.countDocuments(query);
+			System.out.println("Requête : " + count);
+			collection.find(query).limit(5).forEach(element -> System.out.println(element));
+
+			// Si le login n'existe pas :
+			if (count == 0) {
+				// On l'ajoute
+				document.append("login", user.getNom().toLowerCase());
+			} else {
+				// S'il existe déjà on ajoute un numéro correspondant au n-ème login
+				document.append("login", user.getNom().toLowerCase() + count);
+			}
+			// On créé une liste de documents pour la ou les formation(s)
+			List<Document> formations = new ArrayList<Document>();
+			for (int i = 0; i < user.getFormation().size(); i++) {
+				formations.add(new Document("nom", user.getFormation().get(i).getNom())
+						.append("anneeEntree", user.getFormation().get(i).getAnneeEntree())
+						.append("anneeSortie", user.getFormation().get(i).getAnneeSortie()));
+			}
+
+			document.append("nom", user.getNom());
+			document.append("prenom", user.getPrenom());
+			document.append("universiteRattachement", user.getUniversiteRattachement());
+			document.append("formations", formations);
+			document.append("role", MongoDBConnexion.roletoString(user.getRole()));
+
+			// On ajoute le nouvel utilisateur dans la collection utilisateur
+			collection.insertOne(document);
 		}
 
-		// On créé une liste de documents pour la ou les formation(s)
-		List<Document> formations = new ArrayList<Document>();
-		for (int i = 0; i < user.getFormation().size(); i++) {
-			formations.add(new Document("nom", user.getFormation().get(i).getNom())
-					.append("anneeEntree", user.getFormation().get(i).getAnneeEntree())
-					.append("anneeSortie", user.getFormation().get(i).getAnneeSortie()));
-		}
-		document.append("nom", user.getNom());
-		document.append("prenom", user.getPrenom());
-		document.append("universiteRattachement", user.getUniversiteRattachement());
-		document.append("formations", formations);
-		document.append("role", MongoDBConnexion.roletoString(user.getRole()));
-
-		// On ajoute le nouvel utilisateur dans la collection utilisateur
-		collection.insertOne(document);
 	}
 
 	// Insère une oeuvre en base
