@@ -239,7 +239,7 @@ public class MAJBase {
 				} else if (line.split(": ")[0].equals("Theme")) {
 					oeuvre.setTheme(line.split(": ")[1]);
 				} else if (line.split(": ")[0].equals("Roles")) {
-					oeuvre.setRole(MongoDBConnexion.stringToRole(line.split(": ")[1]));
+					oeuvre.setRole(MongoDBConnexion.stringToRole(line.split(": ")[1].toLowerCase()));
 				} else if (line.split(": ")[0].equals("Formations")) {
 					if (line.split(": ")[1].contains(",")) {
 						String[] formation;
@@ -281,10 +281,11 @@ public class MAJBase {
 				// insererUtilisateurEnBase(utilisateurs.get(i));
 			}
 			for (int i = 0; i < formations.size(); i++) {
+				formations.get(i).getUniversites().add(universiteRattachement);
 				// insererFormationEnBase(formations.get(i));
 			}
 
-			// insererOeuvreEnBase(oeuvre);
+			insererOeuvreEnBase(oeuvre);
 
 		} catch (
 

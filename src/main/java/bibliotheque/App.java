@@ -1,5 +1,6 @@
 package bibliotheque;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -80,15 +81,13 @@ public class App extends Application {
 		 * MAJBase.insererFormationEnBase(formation);
 		 */
 
-		// File[] fichiers = null;
-		// fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
-		/*
-		 * for (int i = 0; i < fichiers.length; i++) { // On boucle sur les fichiers du
-		 * répertoire MAJBase.lireFichier(fichiers[i]); // String fileName =
-		 * fichiers[i].getName(); // On récupère le nom du fichier //
-		 * MAJBase.importerOeuvreEnBase(fichiers[i]); //On insère les données des //
-		 * fichiers un par un dans la BDD }
-		 */
+		File[] fichiers = null;
+		fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
+
+		for (int i = 0; i < fichiers.length; i++) {
+			MAJBase.lireFichier(fichiers[i]);
+			String fileName = fichiers[i].getName();
+		}
 
 		launch(); // On lance l'application*/
 

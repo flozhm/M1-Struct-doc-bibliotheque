@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Formation {
@@ -18,6 +19,7 @@ public class Formation {
 
 	public Formation(String nom) {
 		this.nom = nom;
+		this.universites = new ArrayList<>();
 	}
 
 	public String getNom() {
