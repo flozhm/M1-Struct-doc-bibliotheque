@@ -151,7 +151,7 @@
                       <TableColumn fx:id="tableConsultationTheme" editable="false" prefWidth="75.0" text="Thème" />
                       <TableColumn fx:id="tableConsultationPages" editable="false" prefWidth="75.0" text="Pages" />
                       <TableColumn fx:id="tableConsultationDate" editable="false" prefWidth="75.0" text="Date de publication" />
-                      <TableColumn fx:id="tableConsultationDate" editable="false" prefWidth="75.0" text="Note" />
+                      <TableColumn fx:id="tableConsultationNote" editable="false" prefWidth="75.0" text="Note" />
                     </columns>
                   </TableView>
                </children>

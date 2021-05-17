@@ -11,8 +11,8 @@ public class Utilisateur {
 	private List<FormationUtilisateur> formation;
 	private Role role;
 
-	public Utilisateur(String nom, String prenom, String universiteRattachement,
-			           List<FormationUtilisateur> formation, Role role) {
+	public Utilisateur(String nom, String prenom, String universiteRattachement, List<FormationUtilisateur> formation,
+			Role role) {
 		this.login = null;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -20,14 +20,25 @@ public class Utilisateur {
 		this.formation = formation;
 		this.role = role;
 	}
-	
+
+	public Utilisateur(String login, String nom, String prenom, String universiteRattachement,
+			List<FormationUtilisateur> formation, Role role) {
+		this.login = login;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.universiteRattachement = universiteRattachement;
+		this.formation = formation;
+		this.role = role;
+	}
+
 	public String getLogin() {
 		return login;
 	}
-	
+
 	public String getNom() {
 		return nom;
 	}
+
 	public String getPrenom() {
 		return prenom;
 	}
@@ -42,5 +53,11 @@ public class Utilisateur {
 
 	public Role getRole() {
 		return role;
+	}
+
+	@Override
+	public String toString() {
+		return "Utilisateur [login=" + login + ", nom=" + nom + ", prenom=" + prenom + ", universiteRattachement="
+				+ universiteRattachement + ", formation=" + formation + ", role=" + role + "]";
 	}
 }
