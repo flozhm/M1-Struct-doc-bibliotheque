@@ -28,6 +28,16 @@ public class Utilisateur {
 		this.formation = new ArrayList<FormationUtilisateur>();
 	}
 
+	public Utilisateur(String login, String nom, String prenom, String universiteRattachement,
+			List<FormationUtilisateur> formation, Role role) {
+		this.login = login;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.universiteRattachement = universiteRattachement;
+		this.formation = formation;
+		this.role = role;
+	}
+
 	public String getLogin() {
 		return login;
 	}
@@ -76,4 +86,9 @@ public class Utilisateur {
 		this.role = role;
 	}
 
+	@Override
+	public String toString() {
+		return "Utilisateur [login=" + login + ", nom=" + nom + ", prenom=" + prenom + ", universiteRattachement="
+				+ universiteRattachement + ", formation=" + formation + ", role=" + role + "]";
+	}
 }

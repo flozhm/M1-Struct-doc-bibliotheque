@@ -16,6 +16,7 @@ public class MAJBase {
 
 	private static MongoDatabase mdb = new MongoDBConnexion().getDatabase();
 
+
 	// Permet de récupérer
 	public static File[] recupFichiers() {
 
@@ -31,6 +32,17 @@ public class MAJBase {
 		Document query;
 		long count;
 		MongoCollection<Document> collection = mdb.getCollection("utilisateur");
+
+		// On teste s'il existe déjà dans la BDD (via nom+prenom)
+		query = new Document("nom", user.getNom()).append("prenom", user.getPrenom());
+		count = collection.countDocuments(query);
+		System.out.println("Requête : " + count);
+		collection.find(query).limit(5).forEach(element -> System.out.println(element));
+		// S'il existe déjà
+		if (count > 0) {
+			// Vérification si les formations existent déjà pour cet utilisateur
+
+		}
 
 		// On teste s'il existe déjà dans la BDD (via nom)
 		// Requête BDD qui liste tous les utilisateurs via leur nom
@@ -61,7 +73,7 @@ public class MAJBase {
 		document.append("prenom", user.getPrenom());
 		document.append("universiteRattachement", user.getUniversiteRattachement());
 		document.append("formations", formations);
-		document.append("role", user.getRole().name());
+		document.append("role", MongoDBConnexion.roletoString(user.getRole()));
 
 		// On ajoute le nouvel utilisateur dans la collection utilisateur
 		collection.insertOne(document);
@@ -97,7 +109,7 @@ public class MAJBase {
 			document.append("nbPage", oeuvre.getNbPage());
 			document.append("datePublication", MongoDBConnexion.localDatetoString(oeuvre.getDatePubli()));
 			document.append("theme", oeuvre.getTheme());
-			document.append("role", oeuvre.getRole().name());
+			document.append("role", MongoDBConnexion.roletoString(oeuvre.getRole()));
 			document.append("contenu", oeuvre.getContenu());
 
 			// On ajoute la nouvelle oeuvre dans la collection oeuvre
