@@ -23,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -192,6 +193,14 @@ public class AppController implements Initializable {
 	tableNote.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	tableCommentaire.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	tableConsultation.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+	tableNoteOeuvre.setCellValueFactory(new PropertyValueFactory<>("titre"));
+	tableNoteNote.setCellValueFactory(new PropertyValueFactory<>("note"));
+	tableCommentaireOeuvre.setCellValueFactory(new PropertyValueFactory<>("titre"));
+	tableCommentaireDate.setCellValueFactory(new PropertyValueFactory<>("dateDerCommentaire"));
+	tableConsultationTitre.setCellValueFactory(new PropertyValueFactory<>("titre"));
+	tableConsultationTheme.setCellValueFactory(new PropertyValueFactory<>("theme"));
+	tableConsultationPages.setCellValueFactory(new PropertyValueFactory<>("nbPage"));
+	tableConsultationDate.setCellValueFactory(new PropertyValueFactory<>("datePubli"));
 	contenuTextFlow.setPrefWidth(scrollPane.getWidth());
 	InputStream is;
 	try {
