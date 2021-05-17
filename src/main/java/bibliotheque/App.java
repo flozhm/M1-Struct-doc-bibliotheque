@@ -59,6 +59,13 @@ public class App extends Application {
 	 Utilisateur user = new Utilisateur("Pierrat", "Charly", "IDMC", formation1, Role.Etudiant);
 	 MAJBase.insererUtilisateurEnBase(user);
 	 
+	/* BasicDBObject query = new BasicDBObject();
+	 MongoDBConnexion mdb = new MongoDBConnexion();
+	 query.put("login", "pierrat");
+	 Document utilisateur = mdb.getDatabase().getCollection("utilisateur").find(query).first();
+	 
+
+	 System.out.println(utilisateur.getList("formations", Document.class));*/
 
 
 	/* Insertion oeuvre test

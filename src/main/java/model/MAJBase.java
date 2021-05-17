@@ -26,6 +26,21 @@ public class MAJBase {
 	long count;
 	MongoCollection<Document> collection = mdb.getCollection("utilisateur");
 
+	// On teste s'il existe déjà dans la BDD (via nom+prenom)
+	query = new Document("nom", user.getNom())
+			.append("prenom", user.getPrenom());
+	count = collection.countDocuments(query);
+	System.out.println("Requête : " + count);
+	collection.find(query).limit(5).forEach(element -> System.out.println(element));
+	//S'il existe déjà
+	if (count > 0) {
+		//Vérification si les formations existent déjà pour cet utilisateur
+		
+	}
+	
+	
+	
+	
 	// On teste s'il existe déjà dans la BDD (via nom)
 	// Requête BDD qui liste tous les utilisateurs via leur nom
 
