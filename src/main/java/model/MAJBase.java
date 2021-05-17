@@ -16,7 +16,6 @@ public class MAJBase {
 
 	private static MongoDatabase mdb = new MongoDBConnexion().getDatabase();
 
-
 	// Permet de récupérer
 	public static File[] recupFichiers() {
 
@@ -274,6 +273,7 @@ public class MAJBase {
 				// insererUtilisateurEnBase(utilisateurs.get(i));
 			}
 			for (int i = 0; i < formations.size(); i++) {
+				formations.get(i).getUniversites().add(universiteRattachement);
 				// insererFormationEnBase(formations.get(i));
 			}
 
