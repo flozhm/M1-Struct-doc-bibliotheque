@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
@@ -35,6 +36,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import model.Commentaire;
+import model.MAJBase;
 import model.MongoDBConnexion;
 import model.Oeuvre;
 import model.Utilisateur;
@@ -268,7 +270,8 @@ public class AppController implements Initializable {
 	tableNote.getItems().clear();
 	tableCommentaire.getItems().clear();
 	if (oeuvres != null && !oeuvres.isEmpty()) {
-	    oeuvres.stream().filter(oeuvre -> oeuvre.getRole().equals(selectUser.getRole()))
+	    oeuvres.stream().filter(oeuvre -> !oeuvre.getNote().equals("Non notée"))
+		    .filter(oeuvre -> oeuvre.getRole().equals(selectUser.getRole()))
 		    .sorted(Comparator.comparing(Oeuvre::getNote).reversed()).collect(Collectors.toList())
 		    .forEach(oeuvre -> tableNote.getItems().add(oeuvre));
 	    oeuvres.stream().filter(oeuvre -> oeuvre.getDateDerCommentaire() != null)
@@ -332,7 +335,12 @@ public class AppController implements Initializable {
 
     @FXML
     public void ecrire() {
-	lire();
+	if (stars.getSelectedToggle() != null && !commentaireArea.getText().isEmpty()) {
+	    MAJBase.insererCommentaireEnBase(new Commentaire(selectOeuvre.getTitre(), selectUser.getLogin(),
+		    LocalDate.now(), Double.parseDouble(((RadioButton) (stars.getSelectedToggle())).getText()),
+		    commentaireArea.getText()));
+	    lire();
+	}
     }
 
     @FXML
