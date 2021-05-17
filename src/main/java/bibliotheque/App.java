@@ -3,6 +3,11 @@ package bibliotheque;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+
+import org.bson.Document;
+
+import com.mongodb.BasicDBObject;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.FormationUtilisateur;
 import model.MAJBase;
+import model.MongoDBConnexion;
 import model.Role;
 import model.Utilisateur;
 
@@ -37,7 +43,8 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-	// MAJBase.viderBDD();//On vide la BDD
+	
+    MAJBase.viderBDD();//On vide la BDD
 
 	// Insertion commentaire test
 	// Commentaire com = new Commentaire("Oeuvre", "loginFZ58", LocalDate.of(2011,3, 16), 9.4, "blabla"); //YYYY-MM-DD
@@ -52,6 +59,13 @@ public class App extends Application {
 	 Utilisateur user = new Utilisateur("Pierrat", "Charly", "IDMC", formation1, Role.Etudiant);
 	 MAJBase.insererUtilisateurEnBase(user);
 	 
+	 BasicDBObject query = new BasicDBObject();
+	 MongoDBConnexion mdb = new MongoDBConnexion();
+	 query.put("login", "pierrat");
+	 Document utilisateur = mdb.getDatabase().getCollection("utilisateur").find(query).first();
+	 
+
+	 System.out.println(utilisateur.getList("formations", Document.class));
 
 	/* Insertion oeuvre test
 	 * ArrayList<Auteur> auteurs = new ArrayList<Auteur>();

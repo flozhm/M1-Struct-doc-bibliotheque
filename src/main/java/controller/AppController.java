@@ -243,7 +243,8 @@ public class AppController implements Initializable {
 
     private boolean loginExiste(String login) {
 	MongoCollection<Document> collection = new MongoDBConnexion().getDatabase().getCollection("utilisateur");
-	return collection.countDocuments(new Document("login", login)) == 1;
+	System.out.println(collection.countDocuments(new Document("login", login)));
+	return collection.countDocuments(new Document("login", login)) > 0;
     }
 
     @FXML
