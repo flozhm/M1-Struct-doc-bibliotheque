@@ -1,6 +1,5 @@
 package bibliotheque;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -9,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.MAJBase;
 
 /**
  * JavaFX App
@@ -37,11 +35,12 @@ public class App extends Application {
 
 		// MAJBase.viderBDD();// On vide la BDD
 
-		File[] fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
-
-		for (int i = 0; i < fichiers.length; i++) {
-			MAJBase.lireFichier(fichiers[i]);
-		}
+		/*
+		 * File[] fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
+		 * 
+		 * for (int i = 0; i < fichiers.length; i++) { MAJBase.lireFichier(fichiers[i]);
+		 * }
+		 */
 
 		launch(); // On lance l'application*/
 
