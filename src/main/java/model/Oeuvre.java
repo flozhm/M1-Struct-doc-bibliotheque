@@ -18,20 +18,6 @@ public class Oeuvre {
 
     public Oeuvre() {
 	this.auteurs = new ArrayList<Auteur>();
-	calculerNote();
-	calculerDateDerCommentaire();
-    }
-
-    // Pour les tests
-    public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, LocalDate datePubli, Role role, String theme,
-	    String contenu, Boolean b) {
-	this.titre = titre;
-	this.auteurs = auteurs;
-	this.nbPage = nbPage;
-	this.datePubli = datePubli;
-	this.role = role;
-	this.theme = theme;
-	this.contenu = contenu;
     }
 
     public Oeuvre(String titre, List<Auteur> auteurs, int nbPage, LocalDate datePubli, Role role, String theme,
@@ -45,12 +31,6 @@ public class Oeuvre {
 	this.contenu = contenu;
 	calculerNote();
 	calculerDateDerCommentaire();
-    }
-
-    @Override
-    public String toString() {
-	return "Oeuvre\n- titre: " + titre + "\nauteurs: " + auteurs + "\nnbPage: " + nbPage + "\ndatePubli: "
-		+ datePubli + "\nTheme: " + theme + "\nrole= " + role + "\ncontenu=" + contenu + "\n------------";
     }
 
     public String getTitre() {
@@ -89,14 +69,6 @@ public class Oeuvre {
 	return dateDerCommentaire;
     }
 
-    public void calculerDateDerCommentaire() {
-	MongoDBConnexion mdb = new MongoDBConnexion();
-	LocalDate newDateDerCommentaire = mdb.getDateDerCommentaire(this);
-	if (newDateDerCommentaire != null) {
-	    dateDerCommentaire = newDateDerCommentaire;
-	}
-    }
-
     public String getTheme() {
 	return theme;
     }
@@ -125,6 +97,9 @@ public class Oeuvre {
 	return note;
     }
 
+    /**
+     * Récupère la note moyenne de l"oeuvre
+     */
     public void calculerNote() {
 	MongoDBConnexion mdb = new MongoDBConnexion();
 	Double newNote = mdb.getNote(this);
@@ -134,6 +109,17 @@ public class Oeuvre {
 	else {
 	    note = newNote.toString();
 	}
+    }
+
+    /**
+     * Récupère la date du dernier commentaire
+     */
+    public void calculerDateDerCommentaire() {
+        MongoDBConnexion mdb = new MongoDBConnexion();
+        LocalDate newDateDerCommentaire = mdb.getDateDerCommentaire(this);
+        if (newDateDerCommentaire != null) {
+            dateDerCommentaire = newDateDerCommentaire;
+        }
     }
 
 }
