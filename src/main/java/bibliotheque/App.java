@@ -43,11 +43,8 @@ public class App extends Application {
 		 * for (int i = 0; i < fichiers.length; i++) { MAJBase.lireFichier(fichiers[i]);
 		 * }
 		 */
-		try {
-			launch(); // On lance l'application*/
-		} catch (Exception e) {
 
-		}
+		launch(); // On lance l'application*/
 
 	}
 

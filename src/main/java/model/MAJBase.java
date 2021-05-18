@@ -44,6 +44,11 @@ public class MAJBase {
 					, new Document("$set", new Document("universiteRattachement", user.getUniversiteRattachement())) // update
 			);
 
+			// Mise à jour du role de l'utilisateur en lien avec sa dernière oeuvre publiée
+			collection.updateOne(new Document("nom", user.getNom()).append("prenom", user.getPrenom()) // recherche
+					, new Document("$set", new Document("role", user.getRole())) // update
+			);
+
 			// Vérification si les formations existent déjà pour cet utilisateur
 			List<FormationUtilisateur> formationsUtilisateurs = new ArrayList<FormationUtilisateur>();
 			List<Document> majFormation = new ArrayList<Document>();
