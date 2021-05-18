@@ -303,6 +303,7 @@ public class AppController implements Initializable {
 	selectOeuvre = null;
 	rechercheTitre.setText("");
 	rechercheContenu.setText("");
+	rechercheTheme.getSelectionModel().select("");
 	tableConsultation.getItems().clear();
 	if (oeuvres != null && !oeuvres.isEmpty()) {
 	    oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getTitre)).collect(Collectors.toList())
@@ -324,6 +325,7 @@ public class AppController implements Initializable {
 	if (selectOeuvre != null) {
 	    titre.setText(selectOeuvre.getTitre());
 	    contenuTextFlow.getChildren().clear();
+	    text = new Text();
 	    text.setText(selectOeuvre.getContenu());
 	    contenuTextFlow.getChildren().add(text);
 	    auteursBox.getChildren().clear();
