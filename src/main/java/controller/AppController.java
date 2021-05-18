@@ -46,7 +46,7 @@ public class AppController implements Initializable {
     private MongoDBConnexion mdb	  = new MongoDBConnexion();
     private Utilisateur	     selectUser	  = null;
     private Oeuvre	     selectOeuvre = null;
-    private List<Oeuvre>     oeuvres;
+    private List<Oeuvre>     oeuvres	  = null;
     private Text	     text	  = new Text();
 
     @FXML
@@ -201,7 +201,6 @@ public class AppController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-	oeuvres = mdb.getOeuvres();
 	changePane(connexionPane);
 	tableNoteOeuvre.setCellValueFactory(new PropertyValueFactory<>("titre"));
 	tableNoteNote.setCellValueFactory(new PropertyValueFactory<>("note"));
@@ -250,6 +249,7 @@ public class AppController implements Initializable {
     void connexion() {
 	if (!loginTextField.getText().isEmpty() && loginExiste(loginTextField.getText())) {
 	    selectUser = mdb.getUtilisateur(loginTextField.getText());
+	    oeuvres = mdb.getOeuvres(selectUser.getRole());
 	    connexionLabel.setVisible(false);
 	    consultation();
 	}
@@ -271,11 +271,9 @@ public class AppController implements Initializable {
 	tableCommentaire.getItems().clear();
 	if (oeuvres != null && !oeuvres.isEmpty()) {
 	    oeuvres.stream().filter(oeuvre -> !oeuvre.getNote().equals("Non notée"))
-		    .filter(oeuvre -> oeuvre.getRole().equals(selectUser.getRole()))
 		    .sorted(Comparator.comparing(Oeuvre::getNote).reversed()).collect(Collectors.toList())
 		    .forEach(oeuvre -> tableNote.getItems().add(oeuvre));
 	    oeuvres.stream().filter(oeuvre -> oeuvre.getDateDerCommentaire() != null)
-		    .filter(oeuvre -> oeuvre.getRole().equals(selectUser.getRole()))
 		    .sorted(Comparator.comparing(Oeuvre::getDateDerCommentaire).reversed()).collect(Collectors.toList())
 		    .forEach(oeuvre -> tableCommentaire.getItems().add(oeuvre));
 	}
@@ -287,8 +285,7 @@ public class AppController implements Initializable {
 	selectOeuvre = null;
 	tableConsultation.getItems().clear();
 	if (oeuvres != null && !oeuvres.isEmpty()) {
-	    oeuvres.stream().filter(oeuvre -> oeuvre.getRole().equals(selectUser.getRole()))
-		    .sorted(Comparator.comparing(Oeuvre::getTitre)).collect(Collectors.toList())
+	    oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getTitre)).collect(Collectors.toList())
 		    .forEach(oeuvre -> tableConsultation.getItems().add(oeuvre));
 	}
 	changePane(consultationPane);
@@ -297,6 +294,7 @@ public class AppController implements Initializable {
     @FXML
     public void deconnexion() {
 	selectUser = null;
+	oeuvres = null;
 	selectOeuvre = null;
 	changePane(connexionPane);
     }
