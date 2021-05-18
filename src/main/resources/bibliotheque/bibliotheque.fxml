@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
@@ -136,15 +137,30 @@
                   <ColumnConstraints hgrow="SOMETIMES" percentWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints percentHeight="05.0" vgrow="SOMETIMES" />
-                  <RowConstraints percentHeight="95.0" vgrow="SOMETIMES" />
+                  <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints percentHeight="90.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <HBox alignment="CENTER">
+                  <VBox alignment="CENTER" spacing="6.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Tableau de consultation des oeuvres" textAlignment="CENTER" />
+                        <HBox alignment="CENTER" fillHeight="false" spacing="12.0">
+                           <children>
+                              <Label text="Titre :" />
+                              <TextField fx:id="rechercheTitre" />
+                              <Label text="Contenu :" />
+                              <TextField fx:id="rechercheContenu" />
+                              <Label text="Thème :" />
+                              <ComboBox fx:id="rechercheTheme" prefWidth="150.0" />
+                              <Button onAction="#rechercher" style="-fx-background-color: #f4f4f4; -fx-border-color: black;" text="Rechercher" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Tableau de consultation des oeuvres" textAlignment="CENTER" />
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </VBox>
                   <TableView fx:id="tableConsultation" onMouseClicked="#selectionnerOeuvreTCons" GridPane.rowIndex="1">
                     <columns>
                       <TableColumn fx:id="tableConsultationTitre" editable="false" prefWidth="75.0" text="Titre" />
