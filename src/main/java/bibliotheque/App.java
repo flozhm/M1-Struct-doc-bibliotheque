@@ -25,7 +25,9 @@ public class App extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setMaximized(true);
 			primaryStage.show();
-		} catch (IOException e) {
+		}
+
+		catch (IOException e) {
 			e.printStackTrace();
 			LOG.severe("Erreur");
 		}
@@ -33,9 +35,9 @@ public class App extends Application {
 
 	public static void main(String[] args) {
 
-		// MAJBase.viderBDD();// On vide la BDD
-
 		/*
+		 * MAJBase.viderBDD();// On vide la BDD
+		 * 
 		 * File[] fichiers = MAJBase.recupFichiers(); // On récupère les fichiers
 		 * 
 		 * for (int i = 0; i < fichiers.length; i++) { MAJBase.lireFichier(fichiers[i]);

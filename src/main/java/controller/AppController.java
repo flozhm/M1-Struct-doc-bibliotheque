@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
@@ -96,6 +97,15 @@ public class AppController implements Initializable {
 
     @FXML
     private BorderPane consultationPane;
+
+    @FXML
+    private TextField rechercheTitre;
+
+    @FXML
+    private TextField rechercheContenu;
+
+    @FXML
+    private ComboBox<String> rechercheTheme;
 
     @FXML
     private TableView<Oeuvre> tableConsultation;
@@ -250,6 +260,14 @@ public class AppController implements Initializable {
 	if (!loginTextField.getText().isEmpty() && loginExiste(loginTextField.getText())) {
 	    selectUser = mdb.getUtilisateur(loginTextField.getText());
 	    oeuvres = mdb.getOeuvres(selectUser.getRole());
+	    rechercheTheme.getItems().clear();
+	    oeuvres.forEach(oeuvre -> {
+		if (!rechercheTheme.getItems().contains(oeuvre.getTheme())) {
+		    rechercheTheme.getItems().add(oeuvre.getTheme());
+		}
+	    });
+	    rechercheTheme.getItems().add("");
+	    rechercheTheme.getSelectionModel().select("");
 	    connexionLabel.setVisible(false);
 	    consultation();
 	}
@@ -283,6 +301,8 @@ public class AppController implements Initializable {
     @FXML
     public void consultation() {
 	selectOeuvre = null;
+	rechercheTitre.setText("");
+	rechercheContenu.setText("");
 	tableConsultation.getItems().clear();
 	if (oeuvres != null && !oeuvres.isEmpty()) {
 	    oeuvres.stream().sorted(Comparator.comparing(Oeuvre::getTitre)).collect(Collectors.toList())
@@ -374,6 +394,27 @@ public class AppController implements Initializable {
 	    topNode.setVisible(false);
 	    topNode.toBack();
 	    newTopNode.setVisible(true);
+	}
+    }
+
+    @FXML
+    public void rechercher() {
+	tableConsultation.getItems().clear();
+	if (oeuvres != null && !oeuvres.isEmpty()) {
+	    if (rechercheTheme.getSelectionModel().getSelectedItem().isEmpty()) {
+		oeuvres.stream().filter(oeuvre -> oeuvre.getTitre().contains(rechercheTitre.getText()))
+			.filter(oeuvre -> oeuvre.getContenu().contains(rechercheContenu.getText()))
+			.sorted(Comparator.comparing(Oeuvre::getTitre)).collect(Collectors.toList())
+			.forEach(oeuvre -> tableConsultation.getItems().add(oeuvre));
+	    }
+	    else {
+		oeuvres.stream().filter(oeuvre -> oeuvre.getTitre().contains(rechercheTitre.getText()))
+			.filter(oeuvre -> oeuvre.getContenu().contains(rechercheContenu.getText()))
+			.filter(oeuvre -> oeuvre.getTheme()
+				.equals(rechercheTheme.getSelectionModel().getSelectedItem()))
+			.sorted(Comparator.comparing(Oeuvre::getTitre)).collect(Collectors.toList())
+			.forEach(oeuvre -> tableConsultation.getItems().add(oeuvre));
+	    }
 	}
     }
 }
